@@ -1,0 +1,6 @@
+git clone -b Infra-2 https://github.com/Otus-DevOps-2017-11/andywow_infra.git
+cd andywow_infra/homework06
+./runner.sh ruby.txt
+./runner.sh mongodb.txt
+./runner.sh deploy.txt
+
