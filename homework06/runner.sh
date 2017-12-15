@@ -4,7 +4,7 @@
 # Execute pack of commands
 function execute_cmd_list {
     filename=$1;
-    if [[ -f "$filename" ]]; then
+    if [[ ! -f "$filename" ]]; then
         echo "Command list file: $filename doest not exists"
         return 1
     fi
