@@ -1,9 +1,10 @@
-echo "Updating repositories";
+echo Updating repositories;
 sudo apt update;
-echo "Installing ruby"
+echo Installing ruby;
 sudo apt install -y ruby-full \ 
     ruby-bundler \ 
     build-essensial;
-echo "Checking ruby versions"
+echo Checking ruby versions;
 ruby -v;
 bundler -v;
+
