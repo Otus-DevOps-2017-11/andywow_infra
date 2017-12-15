@@ -1,12 +1,41 @@
 # Homework 06
 ## 1. install scripts
 
-
 ```
 ./homework06/runner.sh <command_file.txt> - read and executes commands from file with checks
 ./homework06/ruby.txt - ruby install commands
 ./homework06/mongodb.txt - mongodb install commands
 ./homework06/deploy.txt - deploy app install commands
+```
+
+## 2. gcloud startup 
+
+Запуск из удаленного репозитория
+В качестве параметра передается файл со списком команд для выполнения
+```
+gcloud compute instances create reddit-app \
+  --boot-disk-size=10GB \
+  --image-family ubuntu-1604-lts \
+  --image-project=ubuntu-os-cloud \
+  --machine-type=g1-small \
+  --tags puma-server \
+  --restart-on-failure \
+  --zone=europe-west3-a \
+  --metadata startup-script-url="https://raw.githubusercontent.com/Otus-DevOps-2017-11/andywow_infra/Infra-2/homework06/runner.sh",\
+cmdlist="https://raw.githubusercontent.com/Otus-DevOps-2017-11/andywow_infra/Infra-2/homework06/startup.txt"
+```
+Запуск с локальной системы:
+```
+gcloud compute instances create reddit-app \
+  --boot-disk-size=10GB \
+  --image-family ubuntu-1604-lts \
+  --image-project=ubuntu-os-cloud \
+  --machine-type=g1-small \
+  --tags puma-server \
+  --restart-on-failure \
+  --zone=europe-west3-a \
+  --metadata-from-file startup-script="projects/andywow_infra/homework06/runner.sh" \
+  --metadata cmdlist="https://raw.githubusercontent.com/Otus-DevOps-2017-11/andywow_infra/Infra-2/homework06/startup.txt"
 ```
 
 # Homework 05
