@@ -1,3 +1,15 @@
+# Homework 06
+## 1. install scripts
+
+
+```
+./homework06/runner.sh <command_file.txt> - read and executes commands from file with checks
+./homework06/ruby.txt - ruby install commands
+./homework06/mongodb.txt - mongodb install commands
+./homework06/deploy.txt - deploy app install commands
+```
+
+# Homework 05
 ## 1. page 36 task
 подключение к someinternalhost (1 команда):
 
