@@ -1,10 +1,10 @@
-echo "Downloading project
-git clone https://github.com/Otus-DevOps-2017-11/reddit.git;
-cd reddit;
-echo "Installing application"
-bundle install;
-echo "Starting application"
-puma -d;
-echo "Checking application status"
-ps aux | grep puma;
+echo Downloading project
+git clone https://github.com/Otus-DevOps-2017-11/reddit.git
+cd reddit
+echo Installing application
+bundle install
+echo Starting application
+puma -d
+echo Checking application status
+ps aux | grep puma
 
