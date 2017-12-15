@@ -8,14 +8,14 @@ function execute_cmd_list {
         echo "Command list file: $filename doest not exists"
         return 1
     fi
-    while IFS=";\n" read cmd && [[ -n "$cmd" ]]; do
+    while IFS= read -r cmd && [[ -n "$cmd" ]]; do
         $cmd
         local rc=$?
         if [[ "$rc" != 0 ]]; then
             echo "Command <$cmd> failed. Installation stopped"
             return 1
         fi
-    done < "$filename"
+        done <<< "$(sed ':a;N;$!ba;s/\\\n//g' $filename)"
     return 0
 }
 
