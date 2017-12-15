@@ -3,7 +3,6 @@
 
 # Execute pack of commands
 function execute_cmd_list {
-    local i=0
     filename=$1;
     if [[ -f "$filename" ]]; then
         echo "Command list file: $filename doest not exists"
@@ -21,5 +20,5 @@ function execute_cmd_list {
 }
 
 
-execute_cmd_list ruby.txt
+execute_cmd_list $1
 exit $?
