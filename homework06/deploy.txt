@@ -1,4 +1,5 @@
 echo Downloading project
+cd /tmp
 git clone https://github.com/Otus-DevOps-2017-11/reddit.git
 cd reddit
 echo Installing application
@@ -7,4 +8,6 @@ echo Starting application
 puma -d
 echo Checking application status
 ps aux | grep puma
-
+echo Removing temp installation files
+cd /tmp
+rm -rf reddit
