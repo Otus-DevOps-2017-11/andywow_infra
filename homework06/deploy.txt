@@ -8,6 +8,6 @@ echo Starting application
 puma -d
 echo Checking application status
 ps aux | grep puma
-echo Removing temp installation files
-cd /tmp
-rm -rf reddit
+#echo Removing temp installation files
+#cd /tmp
+#rm -rf reddit
