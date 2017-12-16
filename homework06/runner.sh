@@ -17,7 +17,7 @@ function execute_cmd_list {
     cat $filename
     while IFS= read cmd && [[ -n "$cmd" ]]; do
 	echo "Executing $cmd"
-        eval $cmd
+        eval "$cmd"
         local rc=$?
         if [[ "$rc" != 0 ]]; then
             echo "Command <$cmd> failed. Installation stopped"
