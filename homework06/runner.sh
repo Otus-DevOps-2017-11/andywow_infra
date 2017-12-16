@@ -6,12 +6,12 @@ function execute_cmd_list {
     local filename=$1;
     if [[ ! -f "$filename" ]]; then
 	cmdlist_url="$(curl http://metadata.google.internal/computeMetadata/v1/instance/attributes/cmdlist -H 'Metadata-Flavor: Google')"
-	wget -O startup.txt "$cmdlist_url"
+	wget -O "/tmp/startup.txt" "$cmdlist_url"
 	if [[ "$?" != 0 ]]; then
             echo "Command list file: $filename doest not exists"
             return 1
         fi
-	filename=startup.txt
+	filename="/tmp/startup.txt"
     fi
     cat $filename
     while IFS= read cmd && [[ -n "$cmd" ]]; do
