@@ -6,17 +6,17 @@ function execute_cmd_list {
     local filename=$1;
     local current_dir=$(realpath $(dirname $0))
     if [[ ! -f "$filename" ]]; then
-	cmdlist_url="$(curl http://metadata.google.internal/computeMetadata/v1/instance/attributes/cmdlist -H 'Metadata-Flavor: Google')"
-	wget -O "/tmp/startup.txt" "$cmdlist_url"
-	if [[ "$?" != 0 ]]; then
+        cmdlist_url="$(curl http://metadata.google.internal/computeMetadata/v1/instance/attributes/cmdlist -H 'Metadata-Flavor: Google')"
+        wget -O "/tmp/startup.txt" "$cmdlist_url"
+        if [[ "$?" != 0 ]]; then
             echo "Command list file: $filename doest not exists"
             return 1
         fi
-	filename="/tmp/startup.txt"
+    filename="/tmp/startup.txt"
     fi
     cat $filename
     while IFS= read cmd && [[ -n "$cmd" ]]; do
-	echo "Executing $cmd"
+        echo "Executing $cmd"
         eval "$cmd"
         local rc=$?
         if [[ "$rc" != 0 ]]; then
