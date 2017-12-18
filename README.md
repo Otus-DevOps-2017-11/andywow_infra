@@ -21,7 +21,7 @@ gcloud compute instances create reddit-app \
   --tags puma-server \
   --restart-on-failure \
   --metadata startup-script-url="https://raw.githubusercontent.com/Otus-DevOps-2017-11/andywow_infra/master/runner.sh",\
-cmdlist="https://raw.githubusercontent.com/Otus-DevOps-2017-11/andywow_infra/Infra-2/startup.txt"
+cmdlist="https://raw.githubusercontent.com/Otus-DevOps-2017-11/andywow_infra/master/startup.txt"
 ```
 Запуск с локальной системы:
 ```
