@@ -20,7 +20,6 @@ gcloud compute instances create reddit-app \
   --machine-type=g1-small \
   --tags puma-server \
   --restart-on-failure \
-  --zone=europe-west3-a \
   --metadata startup-script-url="https://raw.githubusercontent.com/Otus-DevOps-2017-11/andywow_infra/Infra-2/runner.sh",\
 cmdlist="https://raw.githubusercontent.com/Otus-DevOps-2017-11/andywow_infra/Infra-2/startup.txt"
 ```
@@ -33,7 +32,6 @@ gcloud compute instances create reddit-app \
   --machine-type=g1-small \
   --tags puma-server \
   --restart-on-failure \
-  --zone=europe-west3-a \
   --metadata-from-file startup-script="projects/andywow_infra/runner.sh" \
   --metadata cmdlist="https://raw.githubusercontent.com/Otus-DevOps-2017-11/andywow_infra/Infra-2/startup.txt"
 ```
