@@ -1,0 +1,16 @@
+echo MongoDB install script started
+echo Importing repository key
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
+echo Creating repository link
+sudo bash -c 'echo "deb http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.2 multiverse" > /etc/apt/sources.list.d/mongodb-org-3.2.list'
+echo Updaring repositories
+sudo apt update
+echo Installing MongoDB
+sudo apt install -y mongodb-org
+echo Starting MongoD service
+sudo systemctl start mongod
+echo Enabling autostart for MongoD service
+sudo systemctl enable mongod
+echo Checking status for MongoD service
+sudo systemctl is-active mongod
+

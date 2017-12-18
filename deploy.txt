@@ -1,0 +1,11 @@
+echo Downloading project
+cd /opt
+[ ! -d reddit ] && git clone https://github.com/Otus-DevOps-2017-11/reddit.git || echo repository already exist
+cd reddit
+echo Installing application
+bundle install
+echo Starting application
+puma -d
+echo Checking application status
+ps aux | grep puma
+

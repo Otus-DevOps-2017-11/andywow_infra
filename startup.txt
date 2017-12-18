@@ -1,0 +1,13 @@
+cd /tmp
+rm -rf andywow_infra
+echo Downloading installation distributive
+git clone -b Infra-2 https://github.com/Otus-DevOps-2017-11/andywow_infra.git
+cd andywow_infra/homework06
+echo Starting setup
+./runner.sh ruby.txt
+./runner.sh mongodb.txt
+./runner.sh deploy.txt
+echo Removing installation distributive
+rm -rf /tmp/andywow_infra
+echo Installation finished
+
