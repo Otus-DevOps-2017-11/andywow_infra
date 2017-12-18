@@ -69,5 +69,4 @@ Host someinternalhost
 ## 3. Network configuration
 
 Host bastion, EXTERNAL IP: 35.205.18.133, INTERNAL IP: 10.132.0.2
-
 Host someinternalhost, INTERNAL IP: 10.132.0.3
