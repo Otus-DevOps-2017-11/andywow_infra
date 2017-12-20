@@ -8,7 +8,7 @@
         "gc_disk_size": "10",
         "gc_disk_type": "pd-standard",
         "gc_network": "default",
-        "gc_tags": ""
+        "gc_tags": "puma-server"
     },
     "builders": [
         {
