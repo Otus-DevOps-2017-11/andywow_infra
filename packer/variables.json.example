@@ -1,4 +1,10 @@
 {
     "gc_project_id": "your-project-id",
-    "gc_source_image_family": "your-image_family"
+    "gc_source_image_family": "your-image-family",
+    "gc_machine_type": "your-machine",
+    "gc_disk_name": "your-disk-name",
+    "gc_disk_size": "10",
+    "gc_disk_type": "pd-standard",
+    "gc_network": "default",
+    "gc_tags": "tag1"
 }
