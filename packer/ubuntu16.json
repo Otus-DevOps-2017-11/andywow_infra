@@ -1,14 +1,19 @@
 {
+    "variables": {
+        "gc_project_id": "",
+        "gc_source_image_family": "",
+        "gc_machine_type": "f1-micro"
+    },
     "builders": [
         {
             "type": "googlecompute",
-            "project_id": "windy-skyline-188819",
+            "project_id": "{{user `gc_project_id`}}",
             "image_name": "reddit-base-{{timestamp}}",
             "image_family": "reddit-base",
-            "source_image_family": "ubuntu-1604-lts",
+            "source_image_family": "{{user `gc_source_image_family`}}",
             "zone": "europe-west1-c",
             "ssh_username": "appuser",
-            "machine_type": "f1-micro",
+            "machine_type": "{{user `gc_machine_type`}}"
         }
     ],
     "provisioners": [

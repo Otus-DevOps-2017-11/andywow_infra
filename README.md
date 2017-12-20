@@ -1,4 +1,18 @@
-# Homework 06
+# Homework 07 - packer
+## 1.
+create image with params from console
+```
+packer build \
+    -var 'gc_project_id=windy-skyline-188819' \
+    -var 'gc_source_image_family=ubuntu-1604-lts' \
+    ubuntu16.json
+```
+create image with params from template
+```
+packer build -var-file=variables.json ubuntu16.json
+```
+
+# Homework 06 - gcp
 ## 1. install scripts
 
 ```
@@ -8,7 +22,7 @@
 ./deploy.txt - deploy app install commands
 ```
 
-## 2. gcloud startup 
+## 2. gcloud startup
 
 Запуск из удаленного репозитория
 В качестве параметра передается файл со списком команд для выполнения
@@ -36,7 +50,7 @@ gcloud compute instances create reddit-app \
   --metadata cmdlist="https://raw.githubusercontent.com/Otus-DevOps-2017-11/andywow_infra/master/startup.txt"
 ```
 
-# Homework 05
+# Homework 05 - ssh & vpn
 ## 1. page 36 task
 подключение к someinternalhost (1 команда):
 
