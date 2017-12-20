@@ -2,6 +2,7 @@
     "variables": {
         "gc_project_id": "",
         "gc_source_image_family": "",
+        "gc_image_description": "created by packer - Andrey Susoev",
         "gc_machine_type": "f1-micro",
         "gc_disk_name": "",
         "gc_disk_size": "10",
@@ -19,7 +20,7 @@
             "zone": "europe-west1-c",
             "ssh_username": "appuser",
             "machine_type": "{{user `gc_machine_type`}}",
-            "image_description": "{{user `image_description`}}",
+            "image_description": "{{user `gc_image_description`}}",
             "disk_name": "{{user `gc_disk_name`}}",
             "disk_size": "{{user `gc_disk_size`}}",
             "network": "{{user `gc_network`}}",

@@ -2,6 +2,7 @@
     "gc_project_id": "your-project-id",
     "gc_source_image_family": "your-image-family",
     "gc_machine_type": "your-machine",
+    "gc_image_description": "image-description",
     "gc_disk_name": "your-disk-name",
     "gc_disk_size": "10",
     "gc_disk_type": "pd-standard",
