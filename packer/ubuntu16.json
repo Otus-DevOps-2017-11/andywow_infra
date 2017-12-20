@@ -1,0 +1,26 @@
+{
+    "builders": [
+        {
+            "type": "googlecompute",
+            "project_id": "windy-skyline-188819",
+            "image_name": "reddit-base-{{timestamp}}",
+            "image_family": "reddit-base",
+            "source_image_family": "ubuntu-1604-lts",
+            "zone": "europe-west1-c",
+            "ssh_username": "appuser",
+            "machine_type": "f1-micro",
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "shell",
+            "script": "scripts/install_ruby.sh",
+            "execute_command": "sudo {{.Path}}"
+        },
+        {
+            "type": "shell",
+            "script": "scripts/install_mongo.sh",
+            "execute_command": "sudo {{.Path}}"
+        }
+    ]
+}
