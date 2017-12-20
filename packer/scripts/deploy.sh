@@ -19,4 +19,4 @@ WantedBy=multi-user.target
 systemctl daemon-reload
 systemctl start puma
 systemctl enable puma
-ps aux | grep -e [p]uma
+systemctl status puma
