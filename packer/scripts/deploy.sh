@@ -10,7 +10,7 @@ After=syslog.target network.target
 
 [Service]
 Type=simple
-WorkingDir=/opt/reddit
+WorkingDirectory=/opt/reddit
 ExecStart=/usr/local/bin/puma
 
 [Install]
@@ -19,4 +19,4 @@ WantedBy=multi-user.target
 systemctl daemon-reload
 systemctl start puma
 systemctl enable puma
-ps aux | grep puma
+ps aux | grep -e [p]uma
