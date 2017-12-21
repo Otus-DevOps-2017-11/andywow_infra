@@ -7,7 +7,7 @@ packer build \
     -var 'gc_source_image_family=ubuntu-1604-lts' \
     ubuntu16.json
 ```
-create image with params from template
+create image with params from param file
 ```
 packer build -var-file=variables.json ubuntu16.json
 ```
