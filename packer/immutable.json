@@ -41,6 +41,11 @@
             "execute_command": "sudo {{.Path}}"
         },
         {
+            "type": "file",
+            "source": "files/puma.service",
+            "destination": "/tmp/puma.service"
+        },
+        {
             "type": "shell",
             "script": "scripts/deploy.sh",
             "execute_command": "sudo {{.Path}}"

@@ -1,0 +1,11 @@
+[Unit]
+Description=Puma service
+After=syslog.target network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/reddit
+ExecStart=/usr/local/bin/puma
+
+[Install]
+WantedBy=multi-user.target
