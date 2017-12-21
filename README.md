@@ -12,6 +12,14 @@ create image with params from param file
 packer build -var-file=variables.json ubuntu16.json
 ```
 
+## 1.*
+
+Запуск через systemd-service (files/puma.service).
+
+## 2.*
+
+Информация в файле config-scripts/create-reddit-vm.sh
+
 # Homework 06 - gcp
 ## 1. install scripts
 
