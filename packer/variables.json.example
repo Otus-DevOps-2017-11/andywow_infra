@@ -1,7 +1,7 @@
 {
     "gc_project_id": "your-project-id",
-    "gc_source_image_family": "your-image-family",
-    "gc_machine_type": "your-machine",
+    "gc_source_image_family": "ubuntu-1604-lts",
+    "gc_machine_type": "f1-micro",
     "gc_image_description": "image-description",
     "gc_disk_name": "your-disk-name",
     "gc_disk_size": "10",
