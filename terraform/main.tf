@@ -20,7 +20,7 @@ resource "google_compute_firewall" "firewall_puma" {
 resource "google_compute_instance" "app" {
   name         = "reddit-app"
   machine_type = "g1-small"
-  zone         = "europe-west1-c"
+  zone         = "${var.zone}"
   tags         = ["reddit-app"]
 
   boot_disk {
@@ -42,7 +42,7 @@ resource "google_compute_instance" "app" {
     type        = "ssh"
     user        = "appuser"
     agent       = false
-    private_key = "${file("~/.ssh/appuser")}"
+    private_key = "${file(var.private_key_path)}"
   }
 
   provisioner "file" {

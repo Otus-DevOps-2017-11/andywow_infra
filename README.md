@@ -1,3 +1,22 @@
+# Homework 08 - terraform
+### 1-3 список параметров
+Name | Req | Default value | Description
+-|-|-|-
+disk_image | N | reddit-base | The name of the image family to which the resulting image belongs
+private_key_path | Y |  | private key path (local machine)
+project | Y |  | The project ID that will be used to launch instances and store images
+public_key_path | Y |  | public key path (local machine)
+zone | N | europe-west1-c | zone name
+
+### 4. команда terraform fmt
+Команда работает, но для себя поставил в IDE Atom плагины:
+
+[atom-beautify](https://atom.io/packages/atom-beautify) - автоформатирование, поддерживает кучу синтаксисов
+
+[language-terraform](https://atom.io/packages/language-terraform) - удобная подсветка кода и автодополнения для terraform
+
+### 5. Создан файл [terraform.tfvars.example](./terraform/terraform.tfvars.example)
+
 # Homework 07 - packer
 ## 1 и 2. Создание базового образа 2 вариантами
 Используется шаблон [ubuntu16.json](./packer/ubuntu16.json)
