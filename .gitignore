@@ -1,3 +1,8 @@
 *.backup
 **/variables.json
 **/*.vars.json
+*.tfstate
+*.tfstate.*.backup
+*.tfstate.backup
+*.tfvars
+.terraform/
