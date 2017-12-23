@@ -1,3 +1,4 @@
+app_port = 9292
 disk_image = "reddit-base"
 private_key_path = "~/.ssh/appuser"
 project = "your project id"

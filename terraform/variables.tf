@@ -1,3 +1,8 @@
+variable "app_port" {
+  default     = "9292"
+  description = "Application port"
+}
+
 variable "disk_image" {
   description = "Disk image"
 }

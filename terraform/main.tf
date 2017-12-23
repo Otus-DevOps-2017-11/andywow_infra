@@ -4,13 +4,21 @@ provider "google" {
   region  = "${var.region}"
 }
 
+data "template_file" "puma_service" {
+  template = "${file("./files/puma.service.tpl")}"
+
+  vars {
+    app_port = "${var.app_port}"
+  }
+}
+
 resource "google_compute_firewall" "firewall_puma" {
   name    = "allow-puma-default"
   network = "default"
 
   allow {
     protocol = "tcp"
-    ports    = ["9292"]
+    ports    = ["${var.app_port}"]
   }
 
   source_ranges = ["0.0.0.0/0"]
@@ -46,7 +54,7 @@ resource "google_compute_instance" "app" {
   }
 
   provisioner "file" {
-    source      = "files/puma.service"
+    content     = "${data.template_file.puma_service.rendered}"
     destination = "/tmp/puma.service"
   }
 

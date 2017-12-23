@@ -2,11 +2,19 @@
 ### 1-3 список параметров
 Name | Req | Default value | Description
 -|-|-|-
+app_port | N | 9292 | Port for puma service
 disk_image | N | reddit-base | The name of the image family to which the resulting image belongs
 private_key_path | Y |  | private key path (local machine)
 project | Y |  | The project ID that will be used to launch instances and store images
 public_key_path | Y |  | public key path (local machine)
 zone | N | europe-west1-c | zone name
+
+В процессе работы сделал шаблон [puma.service.tpl](./terraform/files/puma.service.tpl) для параметризации порта.
+Потребовалось еще раз выполнить команду
+```
+terraform init
+```
+для того, чтобы terraform подкачал провайдера.
 
 ### 4. команда terraform fmt
 Команда работает, но для себя поставил в IDE Atom плагины:
