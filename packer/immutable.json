@@ -1,45 +1,30 @@
 {
     "variables": {
-        "gc_project_id": "",
-        "gc_source_image_family": "",
-        "gc_machine_type": "f1-micro",
-        "gc_image_description": "puma server. baked by packer - Andrey Susoev",
-        "gc_disk_name": "",
         "gc_disk_size": "10",
         "gc_disk_type": "pd-standard",
+        "gc_image_description": "baked by packer - Andrey Susoev",
+        "gc_machine_type": "f1-micro",
         "gc_network": "default",
-        "gc_tags": "puma-server"
+        "gc_project_id": null,
+        "gc_zone": "europe-west1-c"
     },
     "builders": [
         {
             "type": "googlecompute",
-            "project_id": "{{user `gc_project_id`}}",
+            "disk_size": "{{user `gc_disk_size`}}",
+            "disk_type": "{{user `gc_disk_type`}}",
+            "image_description": "{{user `gc_image_description`}}",
             "image_name": "reddit-full-{{timestamp}}",
             "image_family": "reddit-full",
-            "source_image_family": "{{user `gc_source_image_family`}}",
-            "zone": "europe-west1-c",
-            "ssh_username": "appuser",
             "machine_type": "{{user `gc_machine_type`}}",
-            "image_description": "{{user `gc_image_description`}}",
-            "disk_name": "{{user `gc_disk_name`}}",
-            "disk_size": "{{user `gc_disk_size`}}",
             "network": "{{user `gc_network`}}",
-            "tags": [
-                "{{user `gc_tags`}}"
-            ]
+            "project_id": "{{user `gc_project_id`}}",
+            "source_image_family": "reddit-base",
+            "ssh_username": "appuser",
+            "zone": "europe-west1-c"
         }
     ],
     "provisioners": [
-        {
-            "type": "shell",
-            "script": "scripts/install_ruby.sh",
-            "execute_command": "sudo {{.Path}}"
-        },
-        {
-            "type": "shell",
-            "script": "scripts/install_mongo.sh",
-            "execute_command": "sudo {{.Path}}"
-        },
         {
             "type": "file",
             "source": "files/puma.service",
