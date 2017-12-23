@@ -31,7 +31,7 @@ gc_image_label_mongod_ver | N | 3-2-18 | mongod version (only label for image)
 gc_network | N | default | network name
 gc_preemptible | N | true | preemptible status of VM
 gc_project_id | Y | null | The project ID that will be used to launch instances and store images
-gc_source_image_family | N | ubuntu-1604-lts | network name
+gc_source_image_family | Y | ubuntu-1604-lts | network name
 gz_zone | N | europe-west1-c | The zone in which to launch the instance used to create the image
 
 
