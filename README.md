@@ -20,8 +20,8 @@ packer build -var-file=ubuntu16.vars.json ubuntu16.json
 
 #### Список параметров шаблона:
 
-Name | Req | Default value | Description
--|-|-
+ Name | Req | Default value | Description
+-|-|-|-
 gc_machine_type | N | f1-micro | machine type
 gc_disk_size | N | 10 | disk size (gb)
 gc_disk_type | N | pd-standard | disk type (pd-ssd / pd-standard)
