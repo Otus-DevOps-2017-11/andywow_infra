@@ -2,9 +2,7 @@
 data "template_file" "ssh_public_keys" {
   count = "${length(var.users_public_keys)}"
 
-  template = <<EOF
-  $${user}:$${file(sshkey)}
-  EOF
+  template = "$${trimspace(format("%s:%s",user,file(sshkey)))}"
 
   vars {
     user   = "${element(keys(var.users_public_keys),count.index)}"
