@@ -1,4 +1,4 @@
-# SSH private keys temlate
+# SSH public keys temlate
 data "template_file" "ssh_public_keys" {
   count = "${length(var.users_public_keys)}"
 
