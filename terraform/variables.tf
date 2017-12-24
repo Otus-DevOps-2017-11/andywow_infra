@@ -7,6 +7,11 @@ variable "disk_image" {
   description = "Disk image"
 }
 
+variable "instance_count" {
+  default     = 2
+  description = "reddit-app instance count"
+}
+
 variable "private_key_path" {
   description = "Path to the private key used for ssh access"
 }
@@ -36,6 +41,8 @@ variable "users_public_keys" {
     "appuser1" = "~/.ssh/appuser1.pub"
     "appuser2" = "~/.ssh/appuser2.pub"
   }
+
+  description = "user public keys"
 }
 
 variable "zone" {
