@@ -29,6 +29,15 @@ variable "region" {
   description = "Region"
 }
 
+variable "users_public_keys" {
+  type = "map"
+
+  default = {
+    "appuser1" = "~/.ssh/appuser1.pub"
+    "appuser2" = "~/.ssh/appuser2.pub"
+  }
+}
+
 variable "zone" {
   default     = "europe-west1-c"
   description = "Zone"
