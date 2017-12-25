@@ -8,4 +8,4 @@ users_public_keys {
     "appuser1" = "~/.ssh/appuser1.pub"
     "appuser2" = "~/.ssh/appuser2.pub"
 }
-zone_name = "europe-west1-c"
+zone = "europe-west1-c"
