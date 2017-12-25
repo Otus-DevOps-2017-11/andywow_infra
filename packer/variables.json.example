@@ -1,0 +1,13 @@
+{
+    "gc_machine_type": "f1-micro",
+    "gc_disk_size": "10",
+    "gc_disk_type": "pd-standard",
+    "gc_image_description": "image-description",
+    "gc_image_label_ruby_ver": "2-3-0",
+    "gc_image_label_mongod_ver": "3-2-18",
+    "gc_network": "default",
+    "gc_preemptible": "true",
+    "gc_project_id": "your-project-id",
+    "gc_source_image_family": "ubuntu-1604-lts",
+    "gz_zone": "europe-west1-c"
+}

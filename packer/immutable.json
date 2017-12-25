@@ -1,0 +1,39 @@
+{
+    "variables": {
+        "gc_disk_size": "10",
+        "gc_disk_type": "pd-standard",
+        "gc_image_description": "baked by packer - Andrey Susoev",
+        "gc_machine_type": "f1-micro",
+        "gc_network": "default",
+        "gc_project_id": null,
+        "gc_zone": "europe-west1-c"
+    },
+    "builders": [
+        {
+            "type": "googlecompute",
+            "disk_size": "{{user `gc_disk_size`}}",
+            "disk_type": "{{user `gc_disk_type`}}",
+            "image_description": "{{user `gc_image_description`}}",
+            "image_name": "reddit-full-{{timestamp}}",
+            "image_family": "reddit-full",
+            "machine_type": "{{user `gc_machine_type`}}",
+            "network": "{{user `gc_network`}}",
+            "project_id": "{{user `gc_project_id`}}",
+            "source_image_family": "reddit-base",
+            "ssh_username": "appuser",
+            "zone": "europe-west1-c"
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "file",
+            "source": "files/puma.service",
+            "destination": "/tmp/puma.service"
+        },
+        {
+            "type": "shell",
+            "script": "scripts/deploy.sh",
+            "execute_command": "sudo {{.Path}}"
+        }
+    ]
+}
