@@ -17,8 +17,8 @@
             "disk_size": "{{user `gc_disk_size`}}",
             "disk_type": "{{user `gc_disk_type`}}",
             "image_description": "{{user `gc_image_description`}}",
-            "image_name": "reddit-app-{{timestamp}}",
-            "image_family": "reddit-app",
+            "image_name": "reddit-app-base-{{timestamp}}",
+            "image_family": "reddit-app-base",
             "image_labels": {
                 "ruby_ver": "{{user `gc_image_label_ruby_ver`}}"
             },

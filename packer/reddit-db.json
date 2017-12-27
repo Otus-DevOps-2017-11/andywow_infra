@@ -17,8 +17,8 @@
             "disk_size": "{{user `gc_disk_size`}}",
             "disk_type": "{{user `gc_disk_type`}}",
             "image_description": "{{user `gc_image_description`}}",
-            "image_name": "reddit-db-{{timestamp}}",
-            "image_family": "reddit-db",
+            "image_name": "reddit-db-base-{{timestamp}}",
+            "image_family": "reddit-db-base",
             "image_labels": {
                 "mongod_ver": "{{user `gc_image_label_mongod_ver`}}"
             },
