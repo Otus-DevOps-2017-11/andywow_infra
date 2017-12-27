@@ -1,4 +1,14 @@
-# Homework 08 - terraform
+# Homework 09 - terraform-2
+## packer
+Создано 2 семейства образов из образа `ubuntu-1604-lts`:
+
+ `reddit-app` - базовый образ для приложения (с ruby на борту)
+
+ `reddit-db` - базовый образ для БД (c mongod на борту)
+
+
+
+# Homework 08 - terraform-1
 ## 1 Базовое ДЗ
 ### 1-3 список параметров
 Name | Req | Default value | Description
