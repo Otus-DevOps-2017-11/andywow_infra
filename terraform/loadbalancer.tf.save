@@ -1,0 +1,67 @@
+locals {
+  app_port_name = "http"
+}
+
+# Instance group for load balanciing
+resource "google_compute_instance_group" "reddit-app-group" {
+  name        = "reddit-app-group"
+  description = "reddit-app instance group"
+  instances   = ["${google_compute_instance.reddit-app.*.self_link}"]
+
+  named_port {
+    name = "${local.app_port_name}"
+    port = "${var.app_port}"
+  }
+
+  zone = "${var.zone}"
+}
+
+# HTTP health check
+resource "google_compute_http_health_check" "reddit-app-health-check" {
+  name               = "reddit-app-health-check"
+  check_interval_sec = 5
+  port               = "${var.app_port}"
+  request_path       = "/"
+  timeout_sec        = 5
+}
+
+# Backend service
+resource "google_compute_backend_service" "reddit-app-backend-service" {
+  name        = "reddit-app-backend-service"
+  port_name   = "${local.app_port_name}"
+  protocol    = "HTTP"
+  timeout_sec = 10
+  enable_cdn  = false
+
+  backend {
+    group = "${google_compute_instance_group.reddit-app-group.self_link}"
+  }
+
+  health_checks = ["${google_compute_http_health_check.reddit-app-health-check.self_link}"]
+}
+
+# URL mapping
+# Compute Engine HTTP(S) Load Balancing allows you to direct traffic to different instances based on the incoming URL.
+resource "google_compute_url_map" "reddit-app-url-map" {
+  name = "reddit-app-url-map"
+
+  default_service = "${google_compute_backend_service.reddit-app-backend-service.self_link}"
+}
+
+# Resource proxy
+# Route incoming request to URL map
+resource "google_compute_target_http_proxy" "reddit-app-resource-proxy" {
+  name    = "reddit-app-resource-proxy"
+  url_map = "${google_compute_url_map.reddit-app-url-map.self_link}"
+}
+
+# Forwarding rule
+resource "google_compute_global_forwarding_rule" "reddit-app-forwarding-rule" {
+  name       = "reddit-app-forwarding-rule"
+  target     = "${google_compute_target_http_proxy.reddit-app-resource-proxy.self_link}"
+  port_range = 80
+}
+
+output "load_balancer_ip" {
+  value = "${google_compute_global_forwarding_rule.reddit-app-forwarding-rule.ip_address}"
+}
