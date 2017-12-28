@@ -23,6 +23,7 @@ data "template_file" "puma_service" {
 
   vars {
     app_port = "${var.app_port}"
+    db_url   = "${var.db_url}"
   }
 }
 

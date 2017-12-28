@@ -16,7 +16,7 @@ provider "google" {
 
 module "vpc" {
   source        = "../modules/vpc"
-  source_ranges = ["0.0.0.0/0"]
+  source_ranges = ["37.146.106.52"]
 }
 
 module "projectsshkeys" {
@@ -25,15 +25,18 @@ module "projectsshkeys" {
 }
 
 module "db" {
-  source          = "../modules/db"
-  disk_image_db   = "${var.disk_image_db}"
-  public_key_path = "${var.public_key_path}"
-  zone            = "${var.zone}"
+  source           = "../modules/db"
+  db_port          = "${var.db_port}"
+  disk_image_db    = "${var.disk_image_db}"
+  private_key_path = "${var.private_key_path}"
+  public_key_path  = "${var.public_key_path}"
+  zone             = "${var.zone}"
 }
 
 module "app" {
   source           = "../modules/app"
   app_port         = "${var.app_port}"
+  db_url           = "${module.db.db_internal_ip[0]}:${var.db_port}"
   disk_image_app   = "${var.disk_image_app}"
   private_key_path = "${var.private_key_path}"
   public_key_path  = "${var.public_key_path}"

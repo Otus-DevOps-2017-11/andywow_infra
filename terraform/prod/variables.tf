@@ -3,6 +3,11 @@ variable "app_port" {
   description = "Application port"
 }
 
+variable "db_port" {
+  default     = "27017"
+  description = "Database port"
+}
+
 variable "disk_image_app" {
   default     = "reddit-app-base"
   description = "Disk image of application"
