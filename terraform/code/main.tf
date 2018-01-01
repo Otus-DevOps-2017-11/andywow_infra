@@ -38,7 +38,17 @@ module "app" {
   app_port         = "${var.app_port}"
   db_url           = "${module.db.db_internal_ip[0]}:${var.db_port}"
   disk_image_app   = "${var.disk_image_app}"
+  instance_count   = "${var.instance_count_app}"
   private_key_path = "${var.private_key_path}"
   public_key_path  = "${var.public_key_path}"
+  use_loadbalancer = "${var.create_loadbalancer}"
   zone             = "${var.zone}"
+}
+
+module "load_balancer" {
+  source              = "../modules/loadbalancer"
+  app_port            = "${var.app_port}"
+  create_loadbalancer = "${var.create_loadbalancer}"
+  instance_list       = "${module.app.instance_list}"
+  zone                = "${var.zone}"
 }

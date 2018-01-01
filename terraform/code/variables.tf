@@ -3,6 +3,11 @@ variable "app_port" {
   description = "Application port"
 }
 
+variable "create_loadbalancer" {
+  default     = false
+  description = "create load balancer"
+}
+
 variable "db_port" {
   default     = "27017"
   description = "Database port"
@@ -18,9 +23,9 @@ variable "disk_image_db" {
   description = "Disk image of database"
 }
 
-variable "instance_count" {
+variable "instance_count_app" {
   default     = 1
-  description = "reddit-app instance count"
+  description = "app instance count"
 }
 
 variable "private_key_path" {
