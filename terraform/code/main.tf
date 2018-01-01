@@ -16,7 +16,7 @@ provider "google" {
 
 module "vpc" {
   source        = "../modules/vpc"
-  source_ranges = ["37.146.106.52"]
+  source_ranges = "${var.ssh_source_ranges}"
 }
 
 module "projectsshkeys" {

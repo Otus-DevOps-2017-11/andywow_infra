@@ -45,6 +45,11 @@ variable "region" {
   description = "Region"
 }
 
+variable "ssh_source_ranges" {
+  default = ["0.0.0.0/0"]
+  description = "SSH allowed access address list"
+}
+
 variable "users_public_keys" {
   type = "map"
 
