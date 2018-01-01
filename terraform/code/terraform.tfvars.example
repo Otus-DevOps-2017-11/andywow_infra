@@ -1,6 +1,9 @@
 app_port = 9292
-disk_image = "reddit-base"
-instance_count = 2
+create_loadbalancer = false
+db_port = "27017"
+disk_image_app = "reddit-app-base"
+disk_image_db = "reddit-db-base"
+instance_count_app = 1
 private_key_path = "~/.ssh/appuser"
 project = "your project id"
 public_key_path = "~/.ssh/appuser.pub"
