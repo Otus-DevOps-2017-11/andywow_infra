@@ -1,6 +1,9 @@
 # ip address
 resource "google_compute_address" "app_ip" {
-  name = "reddit-app-ip"
+  #count = "${var.use_loadbalancer ? 0 : var.instance_count+1}"
+  count = "${var.instance_count}"
+  name  = "reddit-app-ip-${count.index+1}"
+  address_type = "${var.use_loadbalancer ? "INTERNAL" : "EXTERNAL"}"
 }
 
 # Firewall settings
@@ -30,7 +33,7 @@ data "template_file" "puma_service" {
 # Reddit instance settings
 resource "google_compute_instance" "app" {
   count        = "${var.instance_count}"
-  name         = "reddit-app-${count.index}"
+  name         = "reddit-app-${count.index+1}"
   machine_type = "g1-small"
   zone         = "${var.zone}"
   tags         = ["reddit-app"]
@@ -49,7 +52,8 @@ resource "google_compute_instance" "app" {
     network = "default"
 
     access_config = {
-      nat_ip = "${google_compute_address.app_ip.address}"
+      nat_ip = "${var.use_loadbalancer ? "" :
+        google_compute_address.app_ip.*.address[count.index]}"
     }
   }
 
