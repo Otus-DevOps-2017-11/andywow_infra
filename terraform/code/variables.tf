@@ -46,7 +46,7 @@ variable "region" {
 }
 
 variable "ssh_source_ranges" {
-  default = ["0.0.0.0/0"]
+  default     = ["0.0.0.0/0"]
   description = "SSH allowed access address list"
 }
 
