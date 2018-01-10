@@ -30,6 +30,20 @@ not-my-ip | не пускает
 При разбиении структуры на `stage` и `prod` в каждой их них пришлось делать
 `terraform get && terraform init`
 
+При попытке параллельного изменения возникает ошибка
+
+```
+Error: Error loading state: writing "gs://andywow/terraform/state/default.tflock" failed: googleapi: Error 412: Precondition Failed, conditionNotMet
+Lock Info:
+  ID:        7283473f-73a1-2405-40c8-03fdfbaa90dd
+  Path:      
+  Operation: OperationTypeApply
+  Who:       andy@andyvm
+  Version:   0.11.1
+  Created:   2018-01-10 17:06:00.680041135 +0000 UTC
+  Info:
+```
+
 ## Самостоятельное ДЗ* - backend в GCS
 
 Предварительно создал backend в GCS.
