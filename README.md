@@ -33,7 +33,7 @@ not-my-ip | не пускает
 ## Самостоятельное ДЗ* - backend в GCS
 
 Предварительно создал backend в GCS.
-Далее описал GCS в файле [main.tf](./terraform/prod/main.tf).
+Далее описал GCS в файле [main.tf](./terraform/code/main.tf).
 Сделал бэкап текущего state-файла.
 
 Выполнил инициализацию в папке prod `terraform init -backend-config=backend.conf`
