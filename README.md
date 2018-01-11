@@ -1,3 +1,28 @@
+# Homework 10 - ansible-1
+## Базовая часть
+
+Все сделано по описанию - установлен ansible с помощью файла [requirements.txt](./ansible/requirements.txt)
+```
+sudo pip install -r requirements.txt
+```
+Далее было поднято тестовое откружение, созданы inventory файлы (
+[ini](./ansible/inventory) и [yml](./ansible/inventory.yml)),
+проверен ping до хостов.
+
+На работе использую saltstack, все очень похоже - там тоже есть группы хостов,
+но нет возможности вложенности групп одну в другую.
+
+## Задание *
+
+Создан inventory файл в формате json [inventory.json](./ansible/inventory.json)
+
+При выполении команд, тоже наблюдается схожесть со saltstack-ом.
+По аналогии в `shell` и `command`, там есть state `cmd` с функциями `exec_code`
+и `run`.
+
+Вообщем понятен смысл и преимущество использования различных модулей вместо
+вызова модуля `command` с аргументами.
+
 # Homework 09 - terraform-2
 ## packer
 Создано 2 семейства образов из образа `ubuntu-1604-lts`:
