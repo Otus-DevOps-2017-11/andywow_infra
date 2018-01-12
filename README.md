@@ -16,6 +16,45 @@ sudo pip install -r requirements.txt
 
 Создан inventory файл в формате json [inventory.json](./ansible/inventory.json)
 
+UPD. не правильно понял задание (выяснилось на 11-й лекции ;)
+Что было сделано - установлен пакет `apache-libcloud`
+```
+sudo pip install apache-libcloud
+```
+Далее создана временная папка, в нее скопирован репозиторий ansible с github-а
+```
+git clone https://github.com/ansible/ansible
+```
+Далее из этого репозитория скопировано 2 файла:
+`ansible/contrib/inventory/gce.py ` и `ansible/contrib/inventory/gce.ini`.
+
+Далее в настройках GCE был создан service account с именем `ansible` и скачан
+его json-файл. Отредактирован файл `gce.ini` - в нем указаны настройки для
+подключения к GCE.
+
+Проверяем настройки подключения к GCE:
+```
+./gce.py --list
+```
+Появляется список того, что у нас есть в проекте GCE в формате json.
+Далее пытаемся сделать ping виртуальных машин.
+
+```
+➜  ansible git:(ansible-1) ✗ ansible -i gce.py all -m ping
+reddit-db | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}
+reddit-app-1 | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}
+```
+Все выше указанные файлы лежат в каталоге `ansible` за исключением `gce.ini` и
+`key.json` (по соображениям безопасности).
+Надеюсь сейчас я правильно понял ДЗ ;)
+
+
 При выполении команд, тоже наблюдается схожесть со saltstack-ом.
 По аналогии в `shell` и `command`, там есть state `cmd` с функциями `exec_code`
 и `run`.

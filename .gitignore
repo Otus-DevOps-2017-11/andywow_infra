@@ -1,10 +1,19 @@
+# backup files
 *.backup
+# packer variable files
 **/variables.json
 **/*.vars.json
+# terraform state files
 *.tfstate
 *.tfstate.*.backup
 *.tfstate.backup
 *.tfvars
+# gce backend for terraform
 backend.conf
+# terraform cache dir
 .terraform/
+# log files
 **/*.log
+# gce service account key & config for ansible
+**/key.json
+**/gce.ini
