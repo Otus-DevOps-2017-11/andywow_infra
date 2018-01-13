@@ -77,6 +77,9 @@ dbserver | SUCCESS => {
 }
 ```
 
+UPD 3. Добавил скрипт `ansiblejson.py`, форматирущий файл с параметрами
+`inventory20.json` - это работает на версии `ansible` < `2.1`.
+
 При выполении команд, тоже наблюдается схожесть со saltstack-ом.
 По аналогии в `shell` и `command`, там есть state `cmd` с функциями `exec_code`
 и `run`.
