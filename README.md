@@ -54,6 +54,28 @@ reddit-app-1 | SUCCESS => {
 `key.json` (по соображениям безопасности).
 Надеюсь сейчас я правильно понял ДЗ ;)
 
+UPD 2. Видимо все такие нет ;) Установил старую версию ansible
+```
+git clone -b stable-2.3 --recursive https://github.com/ansible/ansible.git
+source ansible/hacking/env-setup
+```
+
+проверяем версию
+```
+➜  ansible git:(stable-2.3) ansible --version                                       
+ansible 2.3.3.0 (stable-2.3 2c116617de) last updated 2018/01/13 09:33:33 (GMT +300)
+  config file =
+  configured module search path = Default w/o overrides
+  python version = 2.7.12 (default, Nov 20 2017, 18:23:56) [GCC 5.4.0 20160609]
+```
+проверяем ping
+```
+➜  ansible git:(ansible-1) ansible -i inventory.json dbserver -m ping
+dbserver | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}
+```
 
 При выполении команд, тоже наблюдается схожесть со saltstack-ом.
 По аналогии в `shell` и `command`, там есть state `cmd` с функциями `exec_code`
