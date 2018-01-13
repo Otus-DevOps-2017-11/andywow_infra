@@ -1,3 +1,53 @@
+# Homework 11 - ansible-2
+## Базовая часть
+
+Было создано несколько плейбуков:
+- `reddit_app.yml`, в котором любой сценарий может быть применен к любому хосту
+
+Файл `puma.service` пришлось также шаблонизировать (
+[puma.service.j2](./ansible/templates/puma.service.j2)), чтобы иметь возможность указать
+произвольный порт, на котором будет служать запросы приложение.
+Выяснилось, что демон puma не умееть reload-ить свой state. Для исправления
+пришлось добавить строчку `ExecReload=/bin/kill -USR2 $MAINPID`, чтобы он
+перечитывал свой конфиг. Но т.к. у нас адрес БД хранится не в конфиге, а
+задается переменной окружения, то сервис придется все равно перестартовывать.
+Плюс пришлось добавить handler `systemd reload`, чтобы вызывалась команда
+`systemctl daemon-reload` при изменении файла `puma.service`.
+
+В остальном все прошло успешно:
+```
+ansible-playbook reddit_app_one_play.yml --limit db --tags db-tag --check
+ansible-playbook reddit_app_one_play.yml --limit db --tags db-tag
+ansible-playbook reddit_app_one_play.yml --limit app --tags app-tag --check
+ansible-playbook reddit_app_one_play.yml --limit app --tags app-tag
+ansible-playbook reddit_app_one_play.yml --limit app --tags deploy-tag --check
+ansible-playbook reddit_app_one_play.yml --limit app --tags deploy-tag
+```
+
+Думал, как проверить изменения для deploy-я, но ветка в гите у нас одна и она
+уже есть в составе образа.
+
+- `reddit_app_multiple_plays.yml`, в котором сценарии могут применять лишь на конкретные хосты
+
+```
+ansible-playbook reddit_app_multiple_plays.yml --tags db-tag --check
+ansible-playbook reddit_app_multiple_plays.yml --tags db-tag
+ansible-playbook reddit_app_multiple_plays.yml --tags app-tag --check
+ansible-playbook reddit_app_multiple_plays.yml --tags app-tag
+ansible-playbook reddit_app_multiple_plays.yml --tags deploy-tag --check
+ansible-playbook reddit_app_multiple_plays.yml --tags deploy-tag
+```
+
+- `site.yml`, в котором импортировали три других шаблона: `app.yml`, `db.yml` и
+`deploy.yml`.
+
+```
+ansible-playbook site.yml --check
+ansible-playbook site.yml
+```
+
+Здесь мы уже не указываем теги и хосты, на которые применять конфигруацию.
+
 # Homework 10 - ansible-1
 ## Базовая часть
 
