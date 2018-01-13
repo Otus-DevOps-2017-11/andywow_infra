@@ -6,6 +6,10 @@ output "db_external_ip" {
   value = "${module.db.db_external_ip}"
 }
 
+output "db_internal_ip" {
+  value = "${module.db.db_internal_ip}"
+}
+
 output "load_balancer_ip" {
   value = "${module.load_balancer.load_balancer_ip}"
 }
