@@ -1,12 +1,12 @@
 ---
-  
+
 - name: Configure hosts & deploy applications
   hosts: all
   vars:
     mongo_bind_ip: 0.0.0.0
     mongo_port: 27017
     db_host: 10.132.0.5
-    app_port: 9293
+    app_port: 9292
 
   tasks:
     - name: Change mongo config file
