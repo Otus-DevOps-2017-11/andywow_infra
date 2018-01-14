@@ -1,6 +1,8 @@
 ---
 - name: Configure App
-  hosts: app
+  hosts:
+    - app
+    - reddit-app*
   become: true
   vars:
     mongo_port: 27017

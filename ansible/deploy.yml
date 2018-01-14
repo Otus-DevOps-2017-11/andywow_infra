@@ -1,6 +1,8 @@
 ---
 - name: Install bundle
-  hosts: app
+  hosts:
+    - app
+    - reddit-app*
   tags: deploy-tag
 
   tasks:

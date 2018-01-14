@@ -9,6 +9,7 @@
         "gc_preemptible": "true",
         "gc_project_id": null,
         "gc_source_image_family": null,
+        "gc_tags": "packer-ssh",
         "gc_zone": "europe-west1-c"
     },
     "builders": [
@@ -28,14 +29,14 @@
             "project_id": "{{user `gc_project_id`}}",
             "ssh_username": "appuser",
             "source_image_family": "{{user `gc_source_image_family`}}",
+            "tags": "{{user `gc_tags`}}",
             "zone": "{{user `gc_zone`}}"
         }
     ],
     "provisioners": [
         {
-            "type": "shell",
-            "script": "scripts/install_ruby.sh",
-            "execute_command": "sudo {{.Path}}"
+            "type": "ansible",
+            "playbook_file": "ansible/packer_app.yml"
         }
     ]
 }
