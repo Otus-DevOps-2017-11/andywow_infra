@@ -1,0 +1,41 @@
+{
+    "variables": {
+        "gc_disk_size": "10",
+        "gc_disk_type": "pd-standard",
+        "gc_image_description": "created by packer - Andrey Susoev",
+        "gc_image_label_ruby_ver": "2-3-0",
+        "gc_machine_type": "f1-micro",
+        "gc_network": "default",
+        "gc_preemptible": "true",
+        "gc_project_id": null,
+        "gc_source_image_family": null,
+        "gc_zone": "europe-west1-c"
+    },
+    "builders": [
+        {
+            "type": "googlecompute",
+            "disk_size": "{{user `gc_disk_size`}}",
+            "disk_type": "{{user `gc_disk_type`}}",
+            "image_description": "{{user `gc_image_description`}}",
+            "image_name": "reddit-app-base-{{timestamp}}",
+            "image_family": "reddit-app-base",
+            "image_labels": {
+                "ruby_ver": "{{user `gc_image_label_ruby_ver`}}"
+            },
+            "machine_type": "{{user `gc_machine_type`}}",
+            "network": "{{user `gc_network`}}",
+            "preemptible": "{{user `gc_preemptible`}}",
+            "project_id": "{{user `gc_project_id`}}",
+            "ssh_username": "appuser",
+            "source_image_family": "{{user `gc_source_image_family`}}",
+            "zone": "{{user `gc_zone`}}"
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "shell",
+            "script": "scripts/install_ruby.sh",
+            "execute_command": "sudo {{.Path}}"
+        }
+    ]
+}

@@ -9,3 +9,10 @@ data "template_file" "ssh_public_keys" {
     sshkey = "${element(values(var.users_public_keys),count.index)}"
   }
 }
+
+# Project metadata settings
+resource "google_compute_project_metadata" "default" {
+  metadata {
+    ssh-keys = "${join("\n",data.template_file.ssh_public_keys.*.rendered)}"
+  }
+}
