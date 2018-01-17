@@ -3,4 +3,5 @@
 
 app_port: 9292
 db_host: 127.0.0.1
+db_port: 27017
 env: local
