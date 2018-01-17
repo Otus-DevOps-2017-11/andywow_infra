@@ -19,3 +19,4 @@ backend.conf
 **/gce.ini
 # ansible temp files
 *.retry
+jdauphant.nginx

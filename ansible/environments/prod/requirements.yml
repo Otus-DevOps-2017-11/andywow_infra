@@ -1,0 +1,4 @@
+---
+
+- src: jdauphant.nginx
+  version: v2.13
