@@ -1,6 +1,10 @@
 ---
 # tasks file for app
 
+- name: Show info about the env
+  debug:
+    msg: "This host is in {{env}} environment"
+
 - name: Add unit to puma
   template:
     src: puma.service.j2
