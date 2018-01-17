@@ -1,0 +1,12 @@
+---
+# handlers file for app
+
+- name: systemd reload
+  systemd: daemon_reload=yes
+
+- name: restart puma
+  systemd: name=puma daemon_reload=yes state=restarted
+
+- name: reload puma
+  systemd: name=puma state=reloaded
+  

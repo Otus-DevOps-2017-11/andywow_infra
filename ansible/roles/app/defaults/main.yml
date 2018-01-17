@@ -1,0 +1,5 @@
+---
+# defaults file for app
+
+app_port: 9292
+db_host: 127.0.0.1
