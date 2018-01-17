@@ -4,9 +4,6 @@
     - db
     - reddit-db*
   become: true
-  vars:
-    mongo_bind_ip: 0.0.0.0
-    mongo_port: 27017
 
   roles:
     - db

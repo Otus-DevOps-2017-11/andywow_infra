@@ -4,10 +4,6 @@
     - app
     - reddit-app*
   become: true
-  vars:
-    mongo_port: 27017
-    db_host: 10.132.0.5
-    app_port: 9292
 
   roles:
     - app
