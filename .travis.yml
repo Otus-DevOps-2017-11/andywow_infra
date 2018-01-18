@@ -43,8 +43,8 @@ install:
   - ${DIR_BIN}/terraform --version
 
   # getting terraform lint
-  - wget https://github.com/wata727/tflint/releases/download/v${TERRAFORM_LINT_VERSION}/tflint_darwin_amd64.zip -P ${DIR_TMP}
-  - unzip ${DIR_TMP}/tflint_darwin_amd64.zip -d ${DIR_BIN}
+  - wget https://github.com/wata727/tflint/releases/download/v${TERRAFORM_LINT_VERSION}/tflint_linux_amd64.zip -P ${DIR_TMP}
+  - unzip ${DIR_TMP}/tflint_linux_amd64.zip -d ${DIR_BIN}
 
 script:
 
