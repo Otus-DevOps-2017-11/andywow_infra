@@ -59,7 +59,9 @@ script:
   # terraform validate
   - rm ${WORK_DIR}/terraform/${USE_ENV}/backend.tf
   - cd terraform/${USE_ENV}
-  - touch .ssh/appuser.pub .ssh/appuser .ssh/appuser1.pub .ssh/appuser2.pub
+  - mkdir .ssh && cd .ssh
+  - touch appuser.pub appuser appuser1.pub appuser2.pub
+  - cd ..
   - ${DIR_BIN}/terraform init
   - ${DIR_BIN}/terraform validate --var-file=${WORK_DIR}/terraform/code/terraform.tfvars.example
   - cd ${WORK_DIR}
