@@ -53,13 +53,11 @@ install:
 
 script:
 
-  - WORK_DIR="$(pwd)"
-
   # validating packer
   - cd packer
   - ${DIR_BIN}/packer validate -var-file=variables.json.example reddit-app.json
   - ${DIR_BIN}/packer validate -var-file=variables.json.example reddit-db.json
-  - cd ${WORK_DIR}
+  - cd
 
   # validating ansible playbooks
   - find ansible/playbooks -type f -exec echo Validating {} \; -exec ansible-lint {} \;
@@ -67,11 +65,11 @@ script:
   # terraform validate
   - rm terraform/${USE_ENV}/backend.tf
   - cd terraform/${USE_ENV}
-  - touch ${HOME}/.ssh/appuser.pub ${HOME}/.ssh/appuser ${HOME}/.ssh/appuser1.pub ${HOME}/.ssh/appuser2.pub
+  - touch ~/.ssh/appuser.pub ~/.ssh/appuser ~/.ssh/appuser1.pub ~/.ssh/appuser2.pub
   - ${DIR_BIN}/terraform init
-  - ${DIR_BIN}/terraform validate --var-file=${WORK_DIR}/terraform/code/terraform.tfvars.example
-  - ${DIR_BIN}/tflint --error-with-issues
-  - cd ${WORK_DIR}
+  - ${DIR_BIN}/terraform validate --var-file=~/terraform/code/terraform.tfvars.example
+  - ${DIR_BIN}/tflint --var-file=~/terraform/code/terraform.tfvars.example --error-with-issues
+  - cd
 
 notifications:
   email: false
