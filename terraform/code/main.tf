@@ -1,7 +1,3 @@
-locals {
-  module_path = "../modules"
-}
-
 # backend
 terraform {
   backend "gcs" {}
