@@ -1,3 +1,96 @@
+# Homework 10 - ansible-1
+## Базовая часть
+
+Все сделано по описанию - установлен ansible с помощью файла [requirements.txt](./ansible/requirements.txt)
+```
+sudo pip install -r requirements.txt
+```
+Далее было поднято тестовое откружение, созданы inventory файлы (
+[ini](./ansible/inventory) и [yml](./ansible/inventory.yml)),
+проверен ping до хостов.
+
+На работе использую saltstack, все очень похоже - там тоже есть группы хостов,
+но нет возможности вложенности групп одну в другую.
+
+## Задание *
+
+Создан inventory файл в формате json [inventory.json](./ansible/inventory.json)
+
+UPD. не правильно понял задание (выяснилось на 11-й лекции ;)
+Что было сделано - установлен пакет `apache-libcloud`
+```
+sudo pip install apache-libcloud
+```
+Далее создана временная папка, в нее скопирован репозиторий ansible с github-а
+```
+git clone https://github.com/ansible/ansible
+```
+Далее из этого репозитория скопировано 2 файла:
+`ansible/contrib/inventory/gce.py ` и `ansible/contrib/inventory/gce.ini`.
+
+Далее в настройках GCE был создан service account с именем `ansible` и скачан
+его json-файл. Отредактирован файл `gce.ini` - в нем указаны настройки для
+подключения к GCE.
+
+Проверяем настройки подключения к GCE:
+```
+./gce.py --list
+```
+Появляется список того, что у нас есть в проекте GCE в формате json.
+Далее пытаемся сделать ping виртуальных машин.
+
+```
+➜  ansible git:(ansible-1) ✗ ansible -i gce.py all -m ping
+reddit-db | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}
+reddit-app-1 | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}
+```
+Все выше указанные файлы лежат в каталоге `ansible` за исключением `gce.ini` и
+`key.json` (по соображениям безопасности).
+Надеюсь сейчас я правильно понял ДЗ ;)
+
+UPD 2. Видимо все такие нет ;) Установил старую версию ansible
+```
+git clone -b stable-2.3 --recursive https://github.com/ansible/ansible.git
+source ansible/hacking/env-setup
+```
+
+проверяем версию
+```
+➜  ansible git:(stable-2.3) ansible --version                                       
+ansible 2.3.3.0 (stable-2.3 2c116617de) last updated 2018/01/13 09:33:33 (GMT +300)
+  config file =
+  configured module search path = Default w/o overrides
+  python version = 2.7.12 (default, Nov 20 2017, 18:23:56) [GCC 5.4.0 20160609]
+```
+проверяем ping
+```
+➜  ansible git:(ansible-1) ansible -i inventory.json dbserver -m ping
+dbserver | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}
+```
+
+UPD 3. Добавил скрипт `ansiblejson.py`, форматирущий файл с параметрами
+`inventory20.json` - это работает на версии `ansible` < `2.1`.
+
+При выполении команд, тоже наблюдается схожесть со saltstack-ом.
+По аналогии в `shell` и `command`, там есть state `cmd` с функциями `exec_code`
+и `run`.
+
+При использовании `git` модуля пришлось задать другую папку в параметре `dest`,
+чтобы результат был `changed=true`. Хотя в обоих случаях модуль возвращает `SUCCESS`. Если же использовать `command`, то любой rc != 0, трактуется как
+ошибка.
+
+Вообщем понятен смысл и преимущество использования различных модулей вместо
+вызова модуля `command` с аргументами.
+
 # Homework 09 - terraform-2
 ## packer
 Создано 2 семейства образов из образа `ubuntu-1604-lts`:

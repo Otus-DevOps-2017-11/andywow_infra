@@ -1,0 +1,20 @@
+{
+  "all": {
+    "children": {
+      "app": {
+        "hosts": {
+          "appserver": {
+            "ansible_host": "35.187.98.162"
+          }
+        }
+      },
+      "db": {
+        "hosts": {
+          "dbserver": {
+            "ansible_host": "35.205.120.105"
+          }
+        }
+      },
+    }
+  }
+}
