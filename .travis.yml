@@ -2,7 +2,7 @@
 dist: trusty
 
 # running each build in isolated GCE VM
-sudo: required
+sudo: false
 
 language: python
 python: "2.7"
@@ -30,6 +30,9 @@ install:
   - wget https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_linux_amd64.zip -P ${DIR_TMP}
   - unzip ${DIR_TMP}/packer_${PACKER_VERSION}_linux_amd64.zip -d ${DIR_BIN}
   - ${DIR_BIN}/packer --version
+
+  # getting ansible
+  - sudo pip install -r ansible/requirements.txt
 
   # getting terraform
 
