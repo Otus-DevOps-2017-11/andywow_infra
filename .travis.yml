@@ -26,12 +26,12 @@ before_install:
 install:
 
   # making dirs
-  - mkdir -p ${DIR_BIN} ${DIR_TMP}
+  - mkdir -p ~/${DIR_BIN} ~/${DIR_TMP}
 
   # getting packer
-  - wget https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_linux_amd64.zip -P ${DIR_TMP}
-  - unzip ${DIR_TMP}/packer_${PACKER_VERSION}_linux_amd64.zip -d ${DIR_BIN}
-  - ${DIR_BIN}/packer --version
+  - wget https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_linux_amd64.zip -P ~/${DIR_TMP}
+  - unzip ~/${DIR_TMP}/packer_${PACKER_VERSION}_linux_amd64.zip -d ~/${DIR_BIN}
+  - ~/${DIR_BIN}/packer --version
 
   # getting ansible
   - pip install -r ansible/requirements.txt
@@ -42,21 +42,21 @@ install:
   - ansible-lint --version
 
   # getting terraform
-  - wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip -P ${DIR_TMP}
-  - unzip ${DIR_TMP}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip -d ${DIR_BIN}
-  - ${DIR_BIN}/terraform --version
+  - wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip -P ~/${DIR_TMP}
+  - unzip ~/${DIR_TMP}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip -d ~/${DIR_BIN}
+  - ~/${DIR_BIN}/terraform --version
 
   # getting terraform lint
-  - wget https://github.com/wata727/tflint/releases/download/v${TERRAFORM_LINT_VERSION}/tflint_linux_amd64.zip -P ${DIR_TMP}
-  - unzip ${DIR_TMP}/tflint_linux_amd64.zip -d ${DIR_BIN}
-  - ${DIR_BIN}/tflint --version
+  - wget https://github.com/wata727/tflint/releases/download/v${TERRAFORM_LINT_VERSION}/tflint_linux_amd64.zip -P ~/${DIR_TMP}
+  - unzip ~/${DIR_TMP}/tflint_linux_amd64.zip -d $~/{DIR_BIN}
+  - ~/${DIR_BIN}/tflint --version
 
 script:
 
   # validating packer
   - cd packer
-  - ${DIR_BIN}/packer validate -var-file=variables.json.example reddit-app.json
-  - ${DIR_BIN}/packer validate -var-file=variables.json.example reddit-db.json
+  - ~/${DIR_BIN}/packer validate -var-file=variables.json.example reddit-app.json
+  - ~/${DIR_BIN}/packer validate -var-file=variables.json.example reddit-db.json
   - cd
 
   # validating ansible playbooks
@@ -66,9 +66,9 @@ script:
   - rm terraform/${USE_ENV}/backend.tf
   - cd terraform/${USE_ENV}
   - touch ~/.ssh/appuser.pub ~/.ssh/appuser ~/.ssh/appuser1.pub ~/.ssh/appuser2.pub
-  - ${DIR_BIN}/terraform init
-  - ${DIR_BIN}/terraform validate --var-file=~/terraform/code/terraform.tfvars.example
-  - ${DIR_BIN}/tflint --var-file=~/terraform/code/terraform.tfvars.example --error-with-issues
+  - ~/${DIR_BIN}/terraform init
+  - ~/${DIR_BIN}/terraform validate --var-file=~/terraform/code/terraform.tfvars.example
+  - ~/${DIR_BIN}/tflint --var-file=~/terraform/code/terraform.tfvars.example --error-with-issues
   - cd
 
 notifications:
