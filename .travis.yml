@@ -57,7 +57,7 @@ script:
   - cd packer
   - ~/${DIR_BIN}/packer validate -var-file=variables.json.example reddit-app.json
   - ~/${DIR_BIN}/packer validate -var-file=variables.json.example reddit-db.json
-  - cd
+  - cd ..
 
   # validating ansible playbooks
   - find ansible/playbooks -type f -exec echo Validating {} \; -exec ansible-lint {} \;
@@ -69,7 +69,6 @@ script:
   - ~/${DIR_BIN}/terraform init
   - ~/${DIR_BIN}/terraform validate --var-file=~/terraform/code/terraform.tfvars.example
   - ~/${DIR_BIN}/tflint --var-file=~/terraform/code/terraform.tfvars.example --error-with-issues
-  - cd
 
 notifications:
   email: false
