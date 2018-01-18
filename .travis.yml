@@ -58,7 +58,7 @@ script:
 
   # terraform validate
   - cd terraform/${USE_ENV}
-  - rm terraform/${USE_ENV}/backend.tf
+  - rm ${WORK_DIR}/terraform/${USE_ENV}/backend.tf
   - ${DIR_BIN}/terraform init
   - ${DIR_BIN}/terraform validate
 
