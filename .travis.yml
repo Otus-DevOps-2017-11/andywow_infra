@@ -8,14 +8,15 @@ sudo: false
 language: python
 
 env:
-  - DIR_BIN=/travis/bin
-  - DIR_TMP=/travis/tmp
-  - PACKER_VERSION="1.1.13"
-  - TERRAFORM_VERSION="0.11.2"
+  global:
+    - DIR_BIN=/travis/bin
+    - DIR_TMP=/travis/tmp
+    - PACKER_VERSION=1.1.13
+    - TERRAFORM_VERSION=0.11.2
 
 # https://docs.travis-ci.com/user/installing-dependencies/
 before_install:
-  - sudo apt-get -qq update
+  #- sudo apt-get -qq update
   - sudo apt install -y wget
 
 install:
