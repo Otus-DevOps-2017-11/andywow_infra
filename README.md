@@ -27,8 +27,8 @@ ansible-playbook playbooks/site.yml
 Выяснил, что к GCE хостам можно обращаться по их тегам, т.е. имя группы будет
 иметь вид, `tag_%tag-name%`, например `tag_reddit-app`
 
-Сама настройка динамического inventory по-умолчанию происходит в конфигурационном
-файл `ansible.cfg`
+Сама настройка динамического inventory по-умолчанию происходит в
+конфигурационном файл `ansible.cfg`
 ```
 inventory = ./environments/stage
 inventory_ignore_extensions = .static, .yml, .ini
