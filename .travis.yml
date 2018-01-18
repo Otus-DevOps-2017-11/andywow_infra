@@ -1,0 +1,44 @@
+# sudo-enabled Ubuntu Trusty
+dist: trusty
+
+# running each build in isolated GCE VM
+# temp to false
+sudo: false
+
+language: python
+
+env:
+  - DIR_BIN=/travis/bin
+  - DIR_TMP=/travis/tmp
+  - PACKER_VERSION="1.1.13"
+  - TERRAFORM_VERSION="0.11.2"
+
+# https://docs.travis-ci.com/user/installing-dependencies/
+before_install:
+  - sudo apt-get -qq update
+  - sudo apt install -y wget
+
+install:
+
+  # making dirs
+  - sudo mkdir -p ${DIR_BIN} ${DIR_TMP}
+  - sudo chmod 777 ${DIR_BIN} ${DIR_TMP}
+
+  # getting packer
+
+  - wget https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_linux_amd64.zip -P ${DIR_TMP}
+  - unzip ${DIR_TMP}/packer_${PACKER_VERSION}_linux_amd64.zip -d ${DIR_BIN}
+  - ${DIR_BIN}/packer --version
+
+  # getting terraform
+
+  - wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip -P ${DIR_TMP}
+  - unzip ${DIR_TMP}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip -d ${DIR_BIN}
+  - ${DIR_BIN}/terraform --version
+
+script:
+
+  # validating packer
+  - cd packer
+  - ${DIR_BIN}/packer validate -var-file=variables.json.example reddit-app.json
+  - ${DIR_BIN}/packer validate -var-file=variables.json.example reddit-db.json
