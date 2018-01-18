@@ -66,7 +66,8 @@ script:
   - touch ${HOME}/.ssh/appuser.pub ${HOME}/.ssh/appuser ${HOME}/.ssh/appuser1.pub ${HOME}/.ssh/appuser2.pub
   - ${DIR_BIN}/terraform init
   - ${DIR_BIN}/terraform validate --var-file=${WORK_DIR}/terraform/code/terraform.tfvars.example
+  - ${DIR_BIN}/tflint --error-with-issues
   - cd ${WORK_DIR}
 
-
-
+notifications:
+  email: false
