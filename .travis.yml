@@ -60,7 +60,7 @@ script:
   - cd terraform/${USE_ENV}
   - rm ${WORK_DIR}/terraform/${USE_ENV}/backend.tf
   - ${DIR_BIN}/terraform init
-  - ${DIR_BIN}/terraform validate
+  - ${DIR_BIN}/terraform validate --var-file=${WORK_DIR}/terraform/code/terraform.tfvars.example
 
 
 
