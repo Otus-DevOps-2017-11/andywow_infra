@@ -1,8 +1,3 @@
-# backend
-terraform {
-  backend "gcs" {}
-}
-
 # Google provider settings
 provider "google" {
   version = "1.4.0"
