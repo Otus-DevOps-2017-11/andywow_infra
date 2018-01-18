@@ -1,11 +1,16 @@
 # sudo-enabled Ubuntu Trusty
 dist: trusty
 
-# running each build in isolated GCE VM
+# running each build in docker container - cause speed
 sudo: false
 
 language: python
 python: "2.7"
+
+branches:
+  only:
+  - master
+  - ansible-3
 
 env:
   global:
