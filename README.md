@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/Otus-DevOps-2017-11/andywow_infra.svg?branch=ansible-3)]
+(https://travis-ci.org/Otus-DevOps-2017-11/andywow_infra)
+
 # Homework 12 - ansible-3
 ## Базовая часть
 
