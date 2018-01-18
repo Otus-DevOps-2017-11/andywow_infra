@@ -53,6 +53,7 @@ script:
 
   # terraform validate
   - cd terraform/${USE_ENV}
+  - ${DIR_BIN}/terraform init
   - ${DIR_BIN}/terraform validate
 
-  
+
