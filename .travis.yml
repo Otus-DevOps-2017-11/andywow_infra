@@ -13,6 +13,7 @@ env:
     - DIR_TMP=/travis/tmp
     - PACKER_VERSION=1.1.3
     - TERRAFORM_VERSION=0.11.2
+    - TERRAFORM_LINT_VERSION=0.5.4
   matrix:
     - USE_ENV=stage
     - USE_ENV=prod
@@ -29,7 +30,6 @@ install:
   - sudo chmod 777 ${DIR_BIN} ${DIR_TMP}
 
   # getting packer
-
   - wget https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_linux_amd64.zip -P ${DIR_TMP}
   - unzip ${DIR_TMP}/packer_${PACKER_VERSION}_linux_amd64.zip -d ${DIR_BIN}
   - ${DIR_BIN}/packer --version
@@ -38,12 +38,17 @@ install:
   - sudo pip install -r ansible/requirements.txt
 
   # getting terraform
-
   - wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip -P ${DIR_TMP}
   - unzip ${DIR_TMP}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip -d ${DIR_BIN}
   - ${DIR_BIN}/terraform --version
 
+  # getting terraform lint
+  - wget https://github.com/wata727/tflint/releases/download/v${TERRAFORM_LINT_VERSION}/tflint_darwin_amd64.zip -P ${DIR_TMP}
+  - unzip tflint_darwin_amd64.zip -d ${DIR_BIN}
+
 script:
+
+  - WORK_DIR="$(pwd)"
 
   # validating packer
   - cd packer
@@ -53,7 +58,9 @@ script:
 
   # terraform validate
   - cd terraform/${USE_ENV}
+  - rm terraform/${USE_ENV}/backend.tf
   - ${DIR_BIN}/terraform init
   - ${DIR_BIN}/terraform validate
+  
 
 
