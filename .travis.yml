@@ -9,8 +9,8 @@ python: "2.7"
 
 env:
   global:
-    - DIR_BIN=/travis/bin
-    - DIR_TMP=/travis/tmp
+    - DIR_BIN=~/bin
+    - DIR_TMP=~/tmp
     - PACKER_VERSION=1.1.3
     - TERRAFORM_VERSION=0.11.2
     - TERRAFORM_LINT_VERSION=0.5.4
@@ -26,8 +26,7 @@ before_install:
 install:
 
   # making dirs
-  - sudo mkdir -p ${DIR_BIN} ${DIR_TMP}
-  - sudo chmod 777 ${DIR_BIN} ${DIR_TMP}
+  - mkdir -p ${DIR_BIN} ${DIR_TMP}
 
   # getting packer
   - wget https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_linux_amd64.zip -P ${DIR_TMP}
@@ -35,8 +34,12 @@ install:
   - ${DIR_BIN}/packer --version
 
   # getting ansible
-  - sudo pip install -r ansible/requirements.txt
-  - sudo pip install ansible-lint
+  - pip install -r ansible/requirements.txt
+  - ansible --version
+
+  # getting ansible lint
+  - pip install ansible-lint
+  - ansible-lint --version
 
   # getting terraform
   - wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip -P ${DIR_TMP}
@@ -46,6 +49,7 @@ install:
   # getting terraform lint
   - wget https://github.com/wata727/tflint/releases/download/v${TERRAFORM_LINT_VERSION}/tflint_linux_amd64.zip -P ${DIR_TMP}
   - unzip ${DIR_TMP}/tflint_linux_amd64.zip -d ${DIR_BIN}
+  - ${DIR_BIN}/tflint --version
 
 script:
 
@@ -58,7 +62,7 @@ script:
   - cd ${WORK_DIR}
 
   # validating ansible playbooks
-  - find ansible/playbooks -type f -exec ansible-lint {} \;
+  - find ansible/playbooks -type f -exec echo Validating {} \; -exec ansible-lint {} \;
 
   # terraform validate
   - rm terraform/${USE_ENV}/backend.tf
