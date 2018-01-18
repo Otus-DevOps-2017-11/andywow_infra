@@ -3,9 +3,14 @@ variable "app_port" {
   description = "Application port"
 }
 
-variable "db_url" {
-  default     = "127.0.0.1:27017"
-  description = "Database URL"
+variable "db_host" {
+  default     = "127.0.0.1"
+  description = "Database host"
+}
+
+variable "db_port" {
+  default     = "27017"
+  description = "Database port"
 }
 
 variable "disk_image_app" {
