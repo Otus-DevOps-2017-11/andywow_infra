@@ -5,21 +5,5 @@
   debug:
     msg: "This host is in {{env}} environment"
 
-- name: Add unit to puma
-  template:
-    src: puma.service.j2
-    dest: /etc/systemd/system/puma.service
-  notify:
-    - restart puma
-
-- name: Add config for DB connection
-  template:
-    src: db_config.j2
-    dest: /home/appuser/db_config
-    owner: appuser
-    group: appuser
-  notify:
-    - restart puma
-
-- name: enable puma
-  systemd: name=puma enabled=yes
+- import_tasks: ruby.yml
+- import_tasks: puma.yml
