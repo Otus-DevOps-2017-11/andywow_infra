@@ -5,5 +5,5 @@
   debug:
     msg: "This host is in {{env}} environment"
 
-- import_tasks: ruby.yml
-- import_tasks: puma.yml
+- include: ruby.yml
+- include: puma.yml
