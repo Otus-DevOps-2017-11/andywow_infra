@@ -26,5 +26,7 @@ jdauphant.nginx
 *.pyc
 .molecule
 .cache
+# virtualenv
+**/pythonenv/
 
 
