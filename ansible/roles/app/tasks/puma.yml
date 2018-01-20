@@ -11,9 +11,9 @@
 - name: Add config for DB connection
   template:
     src: db_config.j2
-    dest: /home/appuser/db_config
-    owner: appuser
-    group: appuser
+    dest: /home/{{deploy_user}}/db_config
+    owner: {{deploy_user}}
+    group: {{deploy_user}}
   notify:
     - restart puma
 
