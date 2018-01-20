@@ -40,6 +40,17 @@ become: true
 become_user: "{{deploy_user}}"
 ```
 
+## Задание *
+
+Первоначально неправильно передал список параметров, на что ansible ругнулся, что
+ожидает в playbook-е тип dictionary. Посмотрел файл
+`./vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory` и стало
+понятно в чем проблема. Я не совсем понял, почему одну и туже конструкцию в
+`host_vars` и `extra_vars` vagrant преобразовывает поразному. В первом варианте
+он кладет ее в inventory-файл в неправильном формает, во втором корректно
+преобразует в yaml.
+
+
 
 # Homework 12 - ansible-3
 ## Базовая часть
