@@ -9,6 +9,11 @@
 vagrant up
 vagrant provision <host>
 vagrant destroy [-f]
+# in role directory
+molecule init scenario --scenario-name default -r db -d vagrant
+molecule create
+molecule list
+molecule login -h instance
 ```
 
 Лабораторная работа доставила много боли. Т.к. мое рабочее окружение находилось
@@ -49,6 +54,32 @@ become_user: "{{deploy_user}}"
 `host_vars` и `extra_vars` vagrant преобразовывает поразному. В первом варианте
 он кладет ее в inventory-файл в неправильном формает, во втором корректно
 преобразует в yaml.
+
+Устанавливаем виртуальное окружение
+```
+virtualenv pythonenv
+source pythonenv/bin/activate
+```
+
+После выполнения команды `molecule create` мне опять выдает ошибку. В этот момент
+я готов был забить на данное ДЗ ;) Пришлось выполнить `molecule create --debug`,
+из нее узнал, что проблема опять в VirtualBox под WSL. ПОдредактировал файл
+`molecule.yml`, добавил строчки:
+
+```
+raw_config_args:
+  - "customize ['modifyvm', :id, '--uartmode1', 'disconnected']"
+```
+Тесты прошли успешно.
+
+Для выполение сборки образов `packer` с измененным плейбуками `packer_app` и
+`packer_db` пришлось добавить в них переменную :
+```
+"ansible_env_vars": [
+    "ANSIBLE_ROLES_PATH=./roles:~/projects/andywow_infra/ansible/roles"
+]
+```
+не совсем понял, зачем использовать теги в данном контексте.
 
 
 
