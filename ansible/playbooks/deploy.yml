@@ -13,12 +13,16 @@
         repo: 'https://github.com/Otus-DevOps-2017-11/reddit.git'
         dest: /home/{{deploy_user}}/reddit
         version: monolith
+      become: true
+      become_user: "{{deploy_user}}"
       notify: reload puma
 
     - name: Bundle install
       bundler:
         state: present
         chdir: /home/{{deploy_user}}/reddit
+      become: true
+      become_user: "{{deploy_user}}"
       notify: reload puma
 
   handlers:
