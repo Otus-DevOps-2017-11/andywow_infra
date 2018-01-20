@@ -1,5 +1,46 @@
 [![Build Status](https://travis-ci.org/Otus-DevOps-2017-11/andywow_infra.svg?branch=ansible-3)](https://travis-ci.org/Otus-DevOps-2017-11/andywow_infra)
 
+# Homework 13 - ansible-4
+## Базовая часть
+
+По примеру сокурсника Алексея Степаненко, буду выписывать список команд,
+которые использовались в ДЗ, т.к. реально помогает быстро освежить память.
+```
+vagrant up
+vagrant provision <host>
+vagrant destroy [-f]
+```
+
+Лабораторная работа доставила много боли. Т.к. мое рабочее окружение находилось
+внутри VM virtualbox-а, я не мог установить в свою VM virtualbox. Мне пришлось
+использовать WSL (Windows system for Linux). Рабочее окружения я оставил внутри
+VM, проверяя синтаксис, а зател делал push. Внутри WSL я делал pull и вызов
+vagrant-а. Можно было попробовать использовать LXC или GCE, как советовали в чате,
+но времени, к сожалению, не так много, как хотелось бы.
+
+В настройки vm box-а `Vagrantfile` пришлось добавить опцию, отключающую
+serial port, иначе у меня валилась ошибка при создании VM (создавал из под
+WSL).
+
+```
+v.customize ['modifyvm', :id, '--uartmode1', 'disconnected']
+```
+
+также пришлось установить переменные окружения:
+```
+export VAGRANT_WSL_ENABLE_WINDOWS_ACCESS="1"
+export VAGRANT_WSL_WINDOWS_ACCESS_USER_HOME_PATH="/mnt/d/vm"
+```
+
+Были проблемы с деплоем puma - пришлось добавить в конфигурацию `deploy.yml`
+следующие строки, чтобы создавались файлы с правами `{{deploy_user}}`
+
+```
+become: true
+become_user: "{{deploy_user}}"
+```
+
+
 # Homework 12 - ansible-3
 ## Базовая часть
 
