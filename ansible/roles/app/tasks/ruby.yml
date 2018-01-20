@@ -1,15 +1,11 @@
 ---
 # tasks file for installing ruby
 
-- name: Install puma app
-  hosts: all
-  become: true
-  tasks:
-    - name: Install ruby
-      apt:
-        name:
-          - ruby-full
-          - ruby-bundler
-          - build-essential
-        state: present
-        update_cache: yes
+- name: Install ruby
+  apt:
+    name:
+      - ruby-full
+      - ruby-bundler
+      - build-essential
+    state: present
+    update_cache: yes
