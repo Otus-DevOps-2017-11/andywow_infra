@@ -5,5 +5,5 @@
   debug:
     msg: "This host is in {{env}} environment"
 
-- include: install_mongo.yml
-- include: config_mongo.yml
+- import_tasks: install_mongo.yml
+- import_tasks: config_mongo.yml
