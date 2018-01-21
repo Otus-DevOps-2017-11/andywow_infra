@@ -28,5 +28,5 @@ jdauphant.nginx
 .cache
 # virtualenv
 **/pythonenv/
-
-
+# db role ignore
+ansible/roles/db
