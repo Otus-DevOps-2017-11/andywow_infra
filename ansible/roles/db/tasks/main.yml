@@ -1,9 +1,0 @@
----
-# tasks file for db
-
-- name: Show info about the env
-  debug:
-    msg: "This host is in {{env}} environment"
-
-- import_tasks: install_mongo.yml
-- import_tasks: config_mongo.yml
