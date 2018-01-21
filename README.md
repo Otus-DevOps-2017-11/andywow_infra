@@ -9,6 +9,10 @@
 vagrant up
 vagrant provision <host>
 vagrant destroy [-f]
+# vurtual env
+virtualenv pythonenv
+source pythonenv/bin/activate
+deactivate
 # in role directory
 molecule init scenario --scenario-name default -r db -d vagrant
 molecule create
@@ -81,7 +85,56 @@ raw_config_args:
 ```
 не совсем понял, зачем использовать теги в данном контексте.
 
+## Задание *
 
+Роль была перенесена следующими действиями (с сохранением истории изменений):
+
+```
+# Клонируем текущий репозиторий
+git clone --no-hardlinks andywow_infra ansible-mongod
+# Переносим директорию ansible/roles/db в корень репозитория и удаляем файлы
+# и историю, которые не находятся в текущей диреткорит
+git filter-branch --subdirectory-filter ansible/roles/db HEAD
+# переносим ссылку HEAD наверх перезаписанной истории
+git reset --hard
+# Перепаковка объектов и  удаление тех, которых нет в истории
+git gc --aggressive
+# Удаление несуществующих объектов
+git prune
+```
+
+После этого в новом репозитории удаляем ветку `master` и делаем создаем ее заново
+из ветки `ansible-4`. Ветку `ansible-4` удаляем. Делаем push в новый репозиторий
+на [github](https://github.com/andywow/ansible-mongod).
+
+Далее удаляем каталог `db` из основного репозитория. Историю его изменений я
+оставил.
+
+После этого меняем `requirements.yml` и устанавливаем роль
+```
+ansible-galaxy install -r requirements.yml
+```
+
+В новом репозитории удаляем каталог `molecule` и переинциализируем его для работы
+с gce:
+```
+molecule init scenario --scenario-name default -r ansible-mongod -d gce
+```
+
+В GCE на всякий случай сделал отдельный проект для Travis-а.
+
+Делаем github-token для хранения секретов и используем его для travis ci
+```
+travis login --github-token XXXXXXXXXXXXXXXXXXXXXXXXX                             
+Successfully logged in as andywow!
+travis encrypt-file gcetravisci.json -add
+```
+
+В GCE у сервисного аккаунта должна быть роль IAM `Compute Admin`.
+При локальном тестировании molecule пришлось удалять ssh ключить
+из `authorized_hosts` файла. Это отняло больше всего времени на понимание.
+
+Интеграция с чатом настроена: https://devops-team-otus.slack.com/messages/C8C5LKLF7/
 
 # Homework 12 - ansible-3
 ## Базовая часть
@@ -95,7 +148,7 @@ app_port = "80"
 на 80-м порту успешно.
 
 ```
-ansible-playbook playbooks/site.yml
+ansible-galaxy install -r environments/stage/requirements.yml
 ```
 
 ## Задание *
