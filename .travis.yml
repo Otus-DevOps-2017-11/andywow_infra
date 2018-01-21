@@ -11,6 +11,7 @@ branches:
   only:
   - master
   - ansible-3
+  - ansible-4
 
 env:
   global:
