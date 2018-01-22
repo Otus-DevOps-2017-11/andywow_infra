@@ -1,0 +1,83 @@
+---
+- name: Configure MongoDB
+  hosts: db
+  tags: db-tag
+  become: true
+  vars:
+    mongo_bind_ip: 0.0.0.0
+    mongo_port: 27017
+
+  tasks:
+    - name: Change mongo config file
+      template:
+        src: templates/mongod.conf.j2
+        dest: /etc/mongod.conf
+        mode: 0644
+      notify: restart mongod
+
+  handlers:
+    - name: restart mongod
+      service: name=mongod state=restarted
+
+
+- name: Configure App
+  hosts: app
+  tags: app-tag
+  become: true
+  vars:
+    mongo_port: 27017
+    db_host: 10.132.0.5
+    app_port: 9292
+
+  tasks:
+    - name: Add unit to puma
+      template:
+        src: templates/puma.service.j2
+        dest: /etc/systemd/system/puma.service
+      notify:
+        - restart puma
+
+    - name: Add config for DB connection
+      template:
+        src: templates/db_config.j2
+        dest: /home/appuser/db_config
+        owner: appuser
+        group: appuser
+      notify:
+        - restart puma
+
+    - name: enable puma
+      systemd: name=puma enabled=yes
+
+  handlers:
+    - name: systemd reload
+      systemd: daemon_reload=yes
+
+    - name: restart puma
+      systemd: name=puma daemon_reload=yes state=restarted
+
+    - name: reload puma
+      systemd: name=puma state=reloaded
+
+- name: Install bundle
+  hosts: app
+  tags: deploy-tag
+
+  tasks:
+    - name: Fetch the latest version of application code
+      git:
+        repo: 'https://github.com/Otus-DevOps-2017-11/reddit.git'
+        dest: /home/appuser/reddit
+        version: monolith
+      notify: reload puma
+
+    - name: Bundle install
+      bundler:
+        state: present
+        chdir: /home/appuser/reddit
+      notify: reload puma
+
+  handlers:
+    - name: reload puma
+      become: true
+      systemd: name=puma state=reloaded

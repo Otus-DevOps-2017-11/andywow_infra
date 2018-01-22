@@ -17,3 +17,5 @@ backend.conf
 # gce service account key & config for ansible
 **/key.json
 **/gce.ini
+# ansible temp files
+*.retry
