@@ -79,11 +79,11 @@ raw_config_args:
 Для выполение сборки образов `packer` с измененным плейбуками `packer_app` и
 `packer_db` пришлось добавить в них переменную :
 ```
+"extra_arguments": ["--tags","ruby"],
 "ansible_env_vars": [
     "ANSIBLE_ROLES_PATH=./roles:~/projects/andywow_infra/ansible/roles"
 ]
 ```
-не совсем понял, зачем использовать теги в данном контексте.
 
 ## Задание *
 
