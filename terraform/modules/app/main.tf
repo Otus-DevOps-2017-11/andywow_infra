@@ -20,6 +20,21 @@ resource "google_compute_firewall" "firewall_puma" {
   target_tags   = ["reddit-app"]
 }
 
+# Firewall settings HTTP
+resource "google_compute_firewall" "firewall_http" {
+  count = "${var.open_default_http ? 1 : 0}"
+  name    = "allow-puma-http"
+  network = "default"
+
+  allow {
+    protocol = "tcp"
+    ports    = ["80"]
+  }
+
+  source_ranges = ["0.0.0.0/0"]
+  target_tags   = ["reddit-app"]
+}
+
 # Puma services temlate
 data "template_file" "puma_service" {
   template = "${file("${path.module}/files/puma.service.tpl")}"

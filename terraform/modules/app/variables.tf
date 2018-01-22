@@ -3,6 +3,11 @@ variable "app_port" {
   description = "Application port"
 }
 
+variable "open_default_http" {
+  default     = true
+  description = "Allow http port"
+}
+
 variable "db_host" {
   default     = "127.0.0.1"
   description = "Database host"
@@ -32,7 +37,7 @@ variable "public_key_path" {
 }
 
 variable "use_loadbalancer" {
-  default = "false"
+  default     = "false"
   description = "Use load balancer instead of static extenal ip"
 }
 
