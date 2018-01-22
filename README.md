@@ -30,13 +30,20 @@ ansible-playbook playbooks/site.yml
 Сама настройка динамического inventory по-умолчанию происходит в
 конфигурационном файл `ansible.cfg`
 ```
-inventory = ./environments/stage
-inventory_ignore_extensions = .static, .yml, .ini
+inventory = ./environments/stage/gce.py
 ```
 Старый файл `inventory` без расширения пришлось переименовать в
 `inventory.static`, чтобы добавить возможность его исключения.
 Т.е. в каталоге `ansible/environments/$env_name` должны лежать файлы
 `gce.py`, `gce.ini` и `key.json`
+
+Настройки `gce.ini`:
+```
+gce_service_account_email_address = userid@project_id.iam.gserviceaccount.com
+gce_service_account_pem_file_path = path_to_key.json
+gce_project_id = project_id
+instance_states = RUNNING,PROVISIONING
+```
 
 ## Задание **
 
