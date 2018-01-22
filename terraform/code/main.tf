@@ -27,7 +27,7 @@ module "db" {
 module "app" {
   source           = "../modules/app"
   app_port         = "${var.app_port}"
-  db_host          = "${module.db.db_external_ip[0]}"
+  db_host          = "${module.db.db_internal_ip[0]}"
   db_port          = "${var.db_port}"
   disk_image_app   = "${var.disk_image_app}"
   instance_count   = "${var.instance_count_app}"

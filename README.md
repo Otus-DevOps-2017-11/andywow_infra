@@ -139,9 +139,9 @@ travis encrypt-file gcetravisci.json -add
 # Homework 12 - ansible-3
 ## Базовая часть
 
-Для открытия 80-го порта поменял переменную в файле `terraform.tfvars`
+Для открытия 80-го порта создана перменная со значением по-умолчанию `true`
 ```
-app_port = "80"
+open_default_http = true
 ```
 Сама переменная была добавлена в предыдущих ДЗ.
 Вызов роли также был добавлен. Плейбук `site.xml` применен, приложение работает
@@ -166,13 +166,20 @@ ansible-galaxy install -r environments/stage/requirements.yml
 Сама настройка динамического inventory по-умолчанию происходит в
 конфигурационном файл `ansible.cfg`
 ```
-inventory = ./environments/stage
-inventory_ignore_extensions = .static, .yml, .ini
+inventory = ./environments/stage/gce.py
 ```
 Старый файл `inventory` без расширения пришлось переименовать в
 `inventory.static`, чтобы добавить возможность его исключения.
 Т.е. в каталоге `ansible/environments/$env_name` должны лежать файлы
 `gce.py`, `gce.ini` и `key.json`
+
+Настройки `gce.ini`:
+```
+gce_service_account_email_address = userid@project_id.iam.gserviceaccount.com
+gce_service_account_pem_file_path = path_to_key.json
+gce_project_id = project_id
+instance_states = RUNNING,PROVISIONING
+```
 
 ## Задание **
 
