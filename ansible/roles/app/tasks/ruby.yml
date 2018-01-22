@@ -9,3 +9,4 @@
       - build-essential
     state: present
     update_cache: yes
+  tags: ruby

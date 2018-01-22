@@ -7,6 +7,7 @@
     dest: /etc/systemd/system/puma.service
   notify:
     - restart puma
+  tags: puma
 
 - name: Add config for DB connection
   template:
@@ -16,6 +17,8 @@
     group: "{{deploy_user}}"
   notify:
     - restart puma
+  tags: puma
 
 - name: enable puma
   systemd: name=puma enabled=yes
+  tags: puma
