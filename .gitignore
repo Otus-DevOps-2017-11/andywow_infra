@@ -21,4 +21,12 @@ backend.conf
 *.retry
 # ansible community role
 jdauphant.nginx
-
+# Vagrant & molecule
+.vagrant/
+*.pyc
+.molecule
+.cache
+# virtualenv
+**/pythonenv/
+# db role ignore
+ansible/roles/db

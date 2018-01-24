@@ -1,0 +1,12 @@
+---
+# tasks file for installing ruby
+
+- name: Install ruby
+  apt:
+    name:
+      - ruby-full
+      - ruby-bundler
+      - build-essential
+    state: present
+    update_cache: yes
+  tags: ruby

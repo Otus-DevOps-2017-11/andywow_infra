@@ -1,0 +1,24 @@
+---
+# tasks file for installing puma service
+
+- name: Add unit to puma
+  template:
+    src: puma.service.j2
+    dest: /etc/systemd/system/puma.service
+  notify:
+    - restart puma
+  tags: puma
+
+- name: Add config for DB connection
+  template:
+    src: db_config.j2
+    dest: "/home/{{deploy_user}}/db_config"
+    owner: "{{deploy_user}}"
+    group: "{{deploy_user}}"
+  notify:
+    - restart puma
+  tags: puma
+
+- name: enable puma
+  systemd: name=puma enabled=yes
+  tags: puma

@@ -1,18 +1,154 @@
 [![Build Status](https://travis-ci.org/Otus-DevOps-2017-11/andywow_infra.svg?branch=ansible-3)](https://travis-ci.org/Otus-DevOps-2017-11/andywow_infra)
 
+# Homework 13 - ansible-4
+## Базовая часть
+
+По примеру сокурсника Алексея Степаненко, буду выписывать список команд,
+которые использовались в ДЗ, т.к. реально помогает быстро освежить память.
+```
+vagrant up
+vagrant provision <host>
+vagrant destroy [-f]
+# vurtual env
+virtualenv pythonenv
+source pythonenv/bin/activate
+deactivate
+# in role directory
+molecule init scenario --scenario-name default -r db -d vagrant
+molecule create
+molecule list
+molecule login -h instance
+```
+
+Лабораторная работа доставила много боли. Т.к. мое рабочее окружение находилось
+внутри VM virtualbox-а, я не мог установить в свою VM virtualbox. Мне пришлось
+использовать WSL (Windows system for Linux). Рабочее окружения я оставил внутри
+VM, проверяя синтаксис, а зател делал push. Внутри WSL я делал pull и вызов
+vagrant-а. Можно было попробовать использовать LXC или GCE, как советовали в чате,
+но времени, к сожалению, не так много, как хотелось бы.
+
+В настройки vm box-а `Vagrantfile` пришлось добавить опцию, отключающую
+serial port, иначе у меня валилась ошибка при создании VM (создавал из под
+WSL).
+
+```
+v.customize ['modifyvm', :id, '--uartmode1', 'disconnected']
+```
+
+также пришлось установить переменные окружения:
+```
+export VAGRANT_WSL_ENABLE_WINDOWS_ACCESS="1"
+export VAGRANT_WSL_WINDOWS_ACCESS_USER_HOME_PATH="/mnt/d/vm"
+```
+
+Были проблемы с деплоем puma - пришлось добавить в конфигурацию `deploy.yml`
+следующие строки, чтобы создавались файлы с правами `{{deploy_user}}`
+
+```
+become: true
+become_user: "{{deploy_user}}"
+```
+
+## Задание *
+
+Первоначально неправильно передал список параметров, на что ansible ругнулся, что
+ожидает в playbook-е тип dictionary. Посмотрел файл
+`./vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory` и стало
+понятно в чем проблема. Я не совсем понял, почему одну и туже конструкцию в
+`host_vars` и `extra_vars` vagrant преобразовывает поразному. В первом варианте
+он кладет ее в inventory-файл в неправильном формает, во втором корректно
+преобразует в yaml.
+
+Устанавливаем виртуальное окружение
+```
+virtualenv pythonenv
+source pythonenv/bin/activate
+```
+
+После выполнения команды `molecule create` мне опять выдает ошибку. В этот момент
+я готов был забить на данное ДЗ ;) Пришлось выполнить `molecule create --debug`,
+из нее узнал, что проблема опять в VirtualBox под WSL. ПОдредактировал файл
+`molecule.yml`, добавил строчки:
+
+```
+raw_config_args:
+  - "customize ['modifyvm', :id, '--uartmode1', 'disconnected']"
+```
+Тесты прошли успешно.
+
+Для выполение сборки образов `packer` с измененным плейбуками `packer_app` и
+`packer_db` пришлось добавить в них переменную :
+```
+"extra_arguments": ["--tags","ruby"],
+"ansible_env_vars": [
+    "ANSIBLE_ROLES_PATH=./roles:~/projects/andywow_infra/ansible/roles"
+]
+```
+
+## Задание *
+
+Роль была перенесена следующими действиями (с сохранением истории изменений):
+
+```
+# Клонируем текущий репозиторий
+git clone --no-hardlinks andywow_infra ansible-mongod
+# Переносим директорию ansible/roles/db в корень репозитория и удаляем файлы
+# и историю, которые не находятся в текущей диреткорит
+git filter-branch --subdirectory-filter ansible/roles/db HEAD
+# переносим ссылку HEAD наверх перезаписанной истории
+git reset --hard
+# Перепаковка объектов и  удаление тех, которых нет в истории
+git gc --aggressive
+# Удаление несуществующих объектов
+git prune
+```
+
+После этого в новом репозитории удаляем ветку `master` и делаем создаем ее заново
+из ветки `ansible-4`. Ветку `ansible-4` удаляем. Делаем push в новый репозиторий
+на [github](https://github.com/andywow/ansible-mongod).
+
+Далее удаляем каталог `db` из основного репозитория. Историю его изменений я
+оставил.
+
+После этого меняем `requirements.yml` и устанавливаем роль
+```
+ansible-galaxy install -r requirements.yml
+```
+
+В новом репозитории удаляем каталог `molecule` и переинциализируем его для работы
+с gce:
+```
+molecule init scenario --scenario-name default -r ansible-mongod -d gce
+```
+
+В GCE на всякий случай сделал отдельный проект для Travis-а.
+
+Делаем github-token для хранения секретов и используем его для travis ci
+```
+travis login --github-token XXXXXXXXXXXXXXXXXXXXXXXXX                             
+Successfully logged in as andywow!
+travis encrypt-file gcetravisci.json -add
+```
+
+В GCE у сервисного аккаунта должна быть роль IAM `Compute Admin`.
+При локальном тестировании molecule пришлось удалять ssh ключить
+из `authorized_hosts` файла. Это отняло больше всего времени на понимание.
+
+Интеграция с чатом настроена: https://devops-team-otus.slack.com/messages/C8C5LKLF7/
+
 # Homework 12 - ansible-3
 ## Базовая часть
 
-Для открытия 80-го порта поменял переменную в файле `terraform.tfvars`
+Для открытия 80-го порта создана перменная со значением по-умолчанию `true`
 ```
-app_port = "80"
+open_default_http = true
 ```
 Сама переменная была добавлена в предыдущих ДЗ.
 Вызов роли также был добавлен. Плейбук `site.xml` применен, приложение работает
 на 80-м порту успешно.
 
 ```
-ansible-playbook playbooks/site.yml
+ansible-galaxy install -r environments/stage/requirements.yml
 ```
 
 ## Задание *

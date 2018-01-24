@@ -4,9 +4,9 @@ After=network.target
 
 [Service]
 Type=simple
-EnvironmentFile=/home/appuser/db_config
-User=appuser
-WorkingDirectory=/home/appuser/reddit
+EnvironmentFile=/home/{{deploy_user}}/db_config
+User={{deploy_user}}
+WorkingDirectory=/home/{{deploy_user}}/reddit
 ExecStart=/bin/bash -lc 'puma -b tcp://0.0.0.0:{{app_port | default('9292')}}'
 ExecReload=/bin/kill -USR2 $MAINPID
 Restart=always
