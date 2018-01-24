@@ -1,3 +1,61 @@
+[![Build Status](https://travis-ci.org/Otus-DevOps-2017-11/andywow_infra.svg?branch=ansible-3)](https://travis-ci.org/Otus-DevOps-2017-11/andywow_infra)
+
+# Homework 12 - ansible-3
+## Базовая часть
+
+Для открытия 80-го порта поменял переменную в файле `terraform.tfvars`
+```
+app_port = "80"
+```
+Сама переменная была добавлена в предыдущих ДЗ.
+Вызов роли также был добавлен. Плейбук `site.xml` применен, приложение работает
+на 80-м порту успешно.
+
+```
+ansible-playbook playbooks/site.yml
+```
+
+## Задание *
+
+Здесь столкнулся с проблемой:
+
+Как определять хосты GCE по группам, если они создаются динамически.
+Решение было найдено просмотром результатов команды
+```
+./gce.py --list
+```
+Выяснил, что к GCE хостам можно обращаться по их тегам, т.е. имя группы будет
+иметь вид, `tag_%tag-name%`, например `tag_reddit-app`
+
+Сама настройка динамического inventory по-умолчанию происходит в
+конфигурационном файл `ansible.cfg`
+```
+inventory = ./environments/stage/gce.py
+```
+Старый файл `inventory` без расширения пришлось переименовать в
+`inventory.static`, чтобы добавить возможность его исключения.
+Т.е. в каталоге `ansible/environments/$env_name` должны лежать файлы
+`gce.py`, `gce.ini` и `key.json`
+
+Настройки `gce.ini`:
+```
+gce_service_account_email_address = userid@project_id.iam.gserviceaccount.com
+gce_service_account_pem_file_path = path_to_key.json
+gce_project_id = project_id
+instance_states = RUNNING,PROVISIONING
+```
+
+## Задание **
+
+Сам себе нагорожил кучу проблем из-за переменных путей в вызове команд.
+Обнаружил баг у `tflint` - он падает с ошибкой, если вызывается модуль и в
+качестве значения переменной передается строка вида
+```
+db_host          = "${var1}:{var2}"
+```
+Сделал параллельный вызов билда для двух окружений, если дальше будут более
+крутые задачи, например, параллеьный деплой в два окружения.
+
 # Homework 11 - ansible-2
 ## Базовая часть
 

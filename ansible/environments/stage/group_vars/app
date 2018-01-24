@@ -1,0 +1,10 @@
+db_port: 27017
+db_host: 10.132.0.5
+app_port: 9292
+nginx_sites:
+  default:
+    - listen 80
+    - server_name "reddit"
+    - location / {
+        proxy_pass http://127.0.0.1:9292;
+      }

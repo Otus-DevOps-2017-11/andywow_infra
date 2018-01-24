@@ -6,7 +6,7 @@
     "gc_image_label_ruby_ver": "2-3-0",
     "gc_image_label_mongod_ver": "3-2-18",
     "gc_network": "default",
-    "gz_zone": "europe-west1-c"
+    "gz_zone": "europe-west1-c",
     "gc_preemptible": "true",
     "gc_project_id": "your-project-id",
     "gc_source_image_family": "ubuntu-1604-lts",

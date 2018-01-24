@@ -1,12 +1,3 @@
-locals {
-  module_path = "../modules"
-}
-
-# backend
-terraform {
-  backend "gcs" {}
-}
-
 # Google provider settings
 provider "google" {
   version = "1.4.0"
@@ -36,7 +27,8 @@ module "db" {
 module "app" {
   source           = "../modules/app"
   app_port         = "${var.app_port}"
-  db_url           = "${module.db.db_internal_ip[0]}:${var.db_port}"
+  db_host          = "${module.db.db_internal_ip[0]}"
+  db_port          = "${var.db_port}"
   disk_image_app   = "${var.disk_image_app}"
   instance_count   = "${var.instance_count_app}"
   private_key_path = "${var.private_key_path}"

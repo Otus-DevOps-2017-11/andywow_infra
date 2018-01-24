@@ -19,3 +19,6 @@ backend.conf
 **/gce.ini
 # ansible temp files
 *.retry
+# ansible community role
+jdauphant.nginx
+
